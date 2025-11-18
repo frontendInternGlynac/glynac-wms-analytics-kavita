@@ -1,0 +1,21 @@
+export interface Advisor {
+  id: string;
+  initials: string;
+  avatarColor: string; // Tailwind class like 'bg-blue-500'
+  name: string;
+  title: string;
+  clients: number;
+  aum: number; // in dollars
+  performanceScore: number; // 0-10
+  communicationScore: string; // e.g. 'Excellent'
+  taskCompletion: number; // percentage
+  clientSatisfaction: number; // out of 5
+  newClientsYTD: number;
+  avgResponse: string; // e.g. '2.3h'
+  clientRetention: number; // percentage
+}
+
+export interface TeamPerformancePoint {
+  x: string; // month label
+  y: number; // score
+}
