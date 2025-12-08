@@ -16,8 +16,12 @@
     "plugins": [
       {
         "name": "next"
-      }
+      },
+      
     ],
+    "types" : [
+    "react-dom/experimental"
+  ],
     "paths": {
       "@/*": ["./src/*"]
     }
