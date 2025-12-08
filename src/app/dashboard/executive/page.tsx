@@ -9,6 +9,7 @@ import SystemIntegrationHealth from '@/components/dashboard/executive/SystemInte
 import UpcomingThisWeek from '@/components/dashboard/executive/UpcomingThisWeek';
 
 export default function ExecutivePage() {
+    console.log('ExecutivePage rendered');
     const router = useRouter();
     const [currentTab, setCurrentTab] = useState('dashboard');
 
