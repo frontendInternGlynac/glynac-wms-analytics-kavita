@@ -136,7 +136,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                                         }`}
                                     title={isCollapsed ? item.label : undefined}
                                 >
-                                    <Icon className="w-5 h-5 mr-3 text-blue-600 flex-shrink-0" />
+                                    <Icon className="w-5 h-5 mr-3 text-blue-600 shrink-0" />
                                     <span className={`transition-all duration-300 ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
                                         {item.label}
                                     </span>
@@ -194,7 +194,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                                     key={tab.id}
                                     href={tab.path}
                                     onClick={() => onTabChange(tab.id)}
-                                    className={`px-1 pt-1 pb-4 text-sm font-medium whitespace-nowrap flex-shrink-0 ${currentTab === tab.id
+                                    className={`px-1 pt-1 pb-4 text-sm font-medium whitespace-nowrap shrink-0 ${currentTab === tab.id
                                             ? 'border-b-2 border-blue-500 text-blue-600'
                                             : 'text-black hover:text-blue-600'
                                         }`}
