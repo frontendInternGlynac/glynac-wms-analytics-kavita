@@ -1,4 +1,4 @@
-import { Advisor, TeamPerformancePoint } from './types';
+import { Advisor, TeamPerformancePoint, Metric } from './types';
 
 export const TEAM_PERFORMANCE_DATA: TeamPerformancePoint[] = [
   { x: 'Jan', y: 8.1 },
@@ -25,6 +25,7 @@ export const MOCK_ADVISORS: Advisor[] = [
     newClientsYTD: 8,
     avgResponse: '1.8h',
     clientRetention: 96,
+    Quarter: 'This Quarter'
   },
   {
     id: 'mc',
@@ -34,13 +35,14 @@ export const MOCK_ADVISORS: Advisor[] = [
     title: 'Senior Financial Advisor',
     clients: 42,
     aum: 11.2e6,
-    performanceScore: 8.7,
+    performanceScore: 4.5,
     communicationScore: 'Good',
     taskCompletion: 89,
     clientSatisfaction: 4.6,
     newClientsYTD: 6,
     avgResponse: '2.1h',
     clientRetention: 92,
+     Quarter: 'Last Quarter'
   },
   {
     id: 'er',
@@ -57,6 +59,7 @@ export const MOCK_ADVISORS: Advisor[] = [
     newClientsYTD: 5,
     avgResponse: '2.3h',
     clientRetention: 93,
+     Quarter: 'This Month'
   },
   {
     id: 'dw',
@@ -66,12 +69,32 @@ export const MOCK_ADVISORS: Advisor[] = [
     title: 'Junior Financial Advisor',
     clients: 18,
     aum: 3.4e6,
-    performanceScore: 7.3,
+    performanceScore: 7.0,
     communicationScore: 'Average',
     taskCompletion: 78,
     clientSatisfaction: 4.1,
     newClientsYTD: 9,
     avgResponse: '3.2h',
     clientRetention: 95,
+     Quarter: 'Year to date'
   },
 ];
+
+export const Metric_Data : Metric[]=[
+  {Employee : 'Senior Advisor',
+    Total_AUM : '$ 45.M',
+    Average_Performance : '8.2/10',
+    Average_Response : '1.6hr'
+  },
+  {Employee: 'Junior Advisor' ,
+     Total_AUM : '$ 45.M',
+    Average_Performance : '8.2/10',
+    Average_Response : '1.6hr'
+  },
+  {Employee: 'Operational team',
+     Total_AUM : '$ 45.M',
+    Average_Performance : '8.2/10',
+    Average_Response : '1.6hr'
+  },
+
+]

@@ -1,18 +1,21 @@
 "use client";
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { MOCK_ADVISORS, TEAM_PERFORMANCE_DATA } from './constants';
-import { Advisor } from './types';
+import React, { useState, useMemo, useRef} from 'react';
+import { MOCK_ADVISORS} from './constants';
+import { Advisor} from './types';
+import {CartesianGrid, Legend , Line, LineChart, Tooltip, XAxis, YAxis, } from 'recharts';
 import {
   ClockIcon,
   UserGroupIcon,
   ChevronDownIcon,
   ChartBarIcon,
   CurrencyDollarIcon,
-  FunnelIcon,
-  ArrowsUpDownIcon,
+  
   StarIcon,
-  BrainIcon,
+
 } from './icons';
+
+
+
 
 const formatCurrency = (value: number) => {
   if (value >= 1_000_000) {
@@ -24,6 +27,8 @@ const formatCurrency = (value: number) => {
   return `$${value}`;
 };
 
+
+/*
 const MetricCard: React.FC<{
   icon: React.ReactNode;
   title: string;
@@ -390,7 +395,7 @@ const EmployeeAnalytics: React.FC = () => {
         <MetricCard
           icon={<UserGroupIcon className="w-6 h-6" />}
           title="Total Advisors"
-          value="12"
+          value=""
           subValue="2 new this quarter"
           iconBgColor="bg-blue-100"
           iconTextColor="text-blue-600"
@@ -411,7 +416,7 @@ const EmployeeAnalytics: React.FC = () => {
           iconBgColor="bg-purple-100"
           iconTextColor="text-purple-600"
         />
-        <MetricCard
+        <MetricCar
           icon={<ClockIcon className="w-6 h-6" />}
           title="Avg Response Ti..."
           value="2.3h"
@@ -462,5 +467,428 @@ const EmployeeAnalytics: React.FC = () => {
     </div>
   );
 };
+*/
+
+
+const AdvisorPerformanceCard: React.FC<{ advisor: Advisor[] }> = ({advisor}) => {
+  const getPerformanceColor = (score: number) => {
+    if (score >= 9.0) return 'bg-green-500';
+    if (score >= 8.0) return 'bg-blue-500';
+    if (score >= 7.0) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
+
+
+  return(<>
+  <div className='md:flex w-full '>
+  <div className='flex-col m-2 p-4 '>
+    <div className='text-3xl p-2 font-black '> Advisor Performance Analytics </div>
+   {advisor.map((adv) => (
+        <div
+          key={adv.id}
+          className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow"
+        >
+          {/* Header: Avatar + Name + Title */}
+          <div className="flex items-center mb-6">
+            <div
+              className={`w-16 h-16 rounded-full ${adv.avatarColor} text-white flex items-center justify-center font-bold text-xl mr-4`}
+            >
+              {adv.initials}
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">{adv.name}</h3>
+              <p className="text-sm text-gray-600">{adv.title}</p>
+            </div>
+          </div>
+
+          {/* Key Metrics Grid */}
+          <div className="grid grid-cols-2  gap-1 text-sm">
+            {/* Clients */}
+            <div>
+              <p className="text-gray-500">Clients</p>
+              <p className="text-xl font-bold text-gray-900">{adv.clients}</p>
+            </div>
+
+            {/* AUM */}
+            <div>
+              <p className="text-gray-500">AUM</p>
+              <p className="text-xl font-bold text-gray-900">
+                ${ (adv.aum / 1e6).toFixed(1) }M
+              </p>
+            </div>
+
+            {/* Performance Score */}
+            <div>
+              <p className="text-gray-500">Performance Score</p>
+              <p className="text-xl font-bold text-gray-900">
+                {adv.performanceScore.toFixed(1)}/10
+              </p>
+            </div>
+
+            {/* Avg Response Time */}
+            <div>
+              <p className="text-gray-500">Avg Response</p>
+              <p className="text-xl font-bold text-gray-900">{adv.avgResponse}</p>
+            </div>
+
+            {/* Client Satisfaction */}
+            <div>
+              <p className="text-gray-500 flex items-center gap-1">
+                Satisfaction <StarIcon className="w-4 h-4 text-yellow-500" />
+              </p>
+              <p className="text-xl font-bold text-gray-900">
+                {adv.clientSatisfaction.toFixed(1)}/5
+              </p>
+            </div>
+
+            {/* New Clients YTD */}
+            <div>
+              <p className="text-gray-500">New Clients YTD</p>
+              <p className="text-xl font-bold text-green-600">+{adv.newClientsYTD}</p>
+            </div>
+
+            {/* Task Completion */}
+            <div>
+              <p className="text-gray-500">Task Completion</p>
+              <p className="text-xl font-bold text-gray-900">{adv.taskCompletion}%</p>
+            </div>
+
+            {/* Client Retention */}
+            <div>
+              <p className="text-gray-500">Retention Rate</p>
+              <p className="text-xl font-bold text-gray-900">{adv.clientRetention}%</p>
+            </div>
+          </div>
+
+          {/* Communication Badge */}
+          <div className="mt-6">
+            <span
+              className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                adv.communicationScore === 'Excellent'
+                  ? 'bg-green-100 text-green-800'
+                  : adv.communicationScore === 'Good'
+                  ? 'bg-blue-100 text-blue-800'
+                  : 'bg-yellow-100 text-yellow-800'
+              }`}
+            >
+              Communication: {adv.communicationScore}
+            </span>
+          </div>
+
+          {/* Quarter Tag */}
+          <div className="mt-3 text-xs text-gray-500">
+            Active Quarter: {adv.Quarter}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div>
+      <EmployeGraph advisor={advisor} />
+      <CommunicationQuality advisor={advisor} />
+      <ServiceDeliveryExcellence advisors={advisor} />
+      <ProfessionalDevelopment advisors={advisor} />
+    </div>
+    </div>
+</>
+  )
+}
+ 
+const EmployeGraph : React.FC <{advisor: Advisor[]}> =({advisor})=>{
+return (<div className='md:mt-20 width-[90%] m-4 p-2 border rounded-2xl border-gray-300'>
+
+<h1 className='font-black text-2xl text-center '> Employee analytics </h1>
+<LineChart 
+style={{ aspectRatio: '16/9', width: '100%' , height:300  }}   
+data={advisor}>
+  <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> 
+  <Line dataKey="performanceScore" /> 
+  <XAxis dataKey="name" />
+  <YAxis dataKey="performanceScore"  />
+  <Tooltip />
+  <Legend />
+</LineChart>
+
+</div>)
+}
+
+const QualityMetric: React.FC<{ label: string;  barColor: string; barWidth: string }> = ({
+  label,  //later will add value type string | number;
+  barColor,
+  barWidth,
+}) => (
+  <div>
+    <div className="flex justify-between items-center text-sm mb-1">
+      <span className="text-black">{label}</span>
+      {/*<span className="font-semibold text-black">{value}</span>*/}
+    </div>
+    <div className="w-full bg-gray-200 rounded-full h-1.5">
+      <div className={`${barColor} h-1.5 rounded-full`} style={{ width: barWidth }}></div>
+    </div>
+  </div>
+);
+const CommunicationQuality : React.FC <{advisor: Advisor[]}> =({advisor})=>{
+return(< div className='border m-4 rounded-2xl border-gray-300'>
+ <div className=' width-[70%]  m-2 p-4'>  
+  <h2 className='font-black text-xl '> Communication Quality </h2>
+  <div className="space-y-3 flex-col width-[100px]">
+      <QualityMetric label="Response Time"  barColor="bg-green-500" barWidth="90%" />
+      <QualityMetric label="Client Engagement"  barColor="bg-blue-500" barWidth="87%" />
+      <QualityMetric label="Follow-up Completion"  barColor="bg-purple-500" barWidth="91%" />
+      <QualityMetric label="Professional Quality"  barColor="bg-green-500" barWidth="94%" />
+    </div>
+   
+ </div>
+</div>)
+}
+
+const ServiceDeliveryExcellence: React.FC<{ advisors: Advisor[] }> = ({ advisors }) => {
+  const totalAdvisors = advisors.length;
+  const avgRetention =
+    totalAdvisors > 0
+      ? Math.round(advisors.reduce((sum, a) => sum + a.clientRetention, 0) / totalAdvisors)
+      : 0;
+  const avgNewClients =
+    totalAdvisors > 0
+      ? Math.round(advisors.reduce((sum, a) => sum + a.newClientsYTD, 0) / totalAdvisors)
+      : 0;
+  const avgTaskCompletion =
+    totalAdvisors > 0
+      ? Math.round(advisors.reduce((sum, a) => sum + a.taskCompletion, 0) / totalAdvisors)
+      : 0;
+  const issueResolutionRate = avgTaskCompletion; // Derived
+  const crossSellingSuccess = avgNewClients * 2; // Mock derivation
+  const referralGeneration = avgNewClients; // Mock
+
+return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Service Delivery Excellence</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div>
+          <p className="text-gray-600 mb-2">Issue Resolution Rate</p>
+          <p className="text-xl font-bold text-purple-400">{issueResolutionRate}%</p>
+        </div>
+        <div>
+          <p className="text-gray-600 mb-2">Cross-selling Success</p>
+          <p className="text-xl font-bold text-sky-600">{crossSellingSuccess}%</p>
+        </div>
+        <div>
+          <p className="text-gray-600 mb-2">Referral Generation</p>
+          <p className="text-xl font-bold text-yellow-600">{referralGeneration} this quarter</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ProfessionalDevelopment: React.FC<{ advisors: Advisor[] }> = ({ advisors }) => {
+  const totalAdvisors = advisors.length;
+  const avgTaskCompletion =
+    totalAdvisors > 0
+      ? Math.round(advisors.reduce((sum, a) => sum + a.taskCompletion, 0) / totalAdvisors)
+      : 0;
+  const avgSatisfaction =
+    totalAdvisors > 0
+      ? (advisors.reduce((sum, a) => sum + a.clientSatisfaction, 0) / totalAdvisors).toFixed(1)
+      : 0;
+  const totalNewClientsYTD = advisors.reduce((sum, a) => sum + a.newClientsYTD, 0);
+  const complianceScore = avgSatisfaction; // Mock derivation
+  const riskIncidentsYTD = totalAdvisors > 0 ? Math.max(0, 4 - totalNewClientsYTD / 2) : 2; // Mock
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Professional Development</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <p className="text-gray-600 mb-2">Training Completion</p>
+          <p className="text-xl font-bold text-purple-400">{avgTaskCompletion}%</p>
+        </div>
+        <div>
+          <p className="text-gray-600 mb-2">Certifications Current</p>
+          <p className="text-xl font-bold text-yellow-500">{totalAdvisors}/12</p>
+        </div>
+        <div>
+          <p className="text-gray-600 mb-2">Compliance Score</p>
+          <p className="text-xl font-bold text-blue-400">{complianceScore}/5</p>
+        </div>
+        <div>
+          <p className="text-gray-600 mb-2">Risk Incidents YTD</p>
+          <p className="text-xl font-bold text-red-600">{riskIncidentsYTD}</p>
+        </div>
+      </div>
+    </div>
+  );};
+
+const Footer: React.FC = () => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mt-6 text-center text-sm text-gray-500">
+    Employee analytics last updated: Today at 1:30 PM | Next refresh in 30 minutes
+  </div>
+);
+
+const EmployeeAnalytics: React.FC = () => {
+  const [selectedTeam, setSelectedTeam] = useState<string>('All Teams');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('Year to Date');
+
+  // Map team options to advisor titles or logic
+  const getFilteredAdvisors = useMemo(() => {
+    let filtered = MOCK_ADVISORS;
+
+    // Filter by Team
+    if (selectedTeam !== 'All Teams') {
+      if (selectedTeam === 'Senior Advisor') {
+        filtered = filtered.filter(a => a.title.includes('Senior'));
+      } else if (selectedTeam === 'Junior Advisor') {
+        filtered = filtered.filter(a => a.title.includes('Junior'));
+      } else if (selectedTeam === 'Operational team') {
+        // Assuming no operational team in mock data, return empty or adjust as needed
+        filtered = [];
+      }
+    }
+
+    // Filter by Period (using Quarter field in mock data)
+    if (selectedPeriod !== 'Year to Date') {
+      filtered = filtered.filter(a => a.Quarter === selectedPeriod.replace(' to date', ''));
+    }
+
+    return filtered;
+  }, [selectedTeam, selectedPeriod]);
+
+  // Calculate metrics based on filtered advisors
+  const metrics = useMemo(() => {
+    const advisors = getFilteredAdvisors;
+  
+
+    const totalAdvisors = advisors.length;
+
+    const totalAUM = advisors.reduce((sum, a) => sum + a.aum, 0);
+    const formattedAUM = totalAUM >= 1e9
+      ? `$${(totalAUM / 1e9).toFixed(1)}B`
+      : `$${(totalAUM / 1e6).toFixed(1)}M`;
+
+    const avgPerformance = advisors.length > 0
+      ? (advisors.reduce((sum, a) => sum + a.performanceScore, 0) / advisors.length).toFixed(1)
+      : '0.0';
+
+    const parseHours = (str: string) => parseFloat(str.replace('h', '')) || 0;
+    const avgResponseHours = advisors.length > 0
+      ? (advisors.reduce((sum, a) => sum + parseHours(a.avgResponse), 0) / advisors.length).toFixed(1)
+      : '0.0';
+
+    // Example: new this quarter - count advisors with "This Quarter"
+    const newThisQuarter = MOCK_ADVISORS.filter(a => a.Quarter === 'This Quarter').length;
+
+    return {
+      totalAdvisors,
+      formattedAUM,
+      avgPerformance,
+      avgResponseHours,
+      newThisQuarter,
+    };
+  }, [getFilteredAdvisors]);
+
+ 
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6 md:p-8 lg:p-12 ">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start mb-10 gap-6">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-black text-gray-900">Employee Analytics</h1>
+            <p className="text-gray-600 mt-2 max-w-2xl">
+              Performance tracking and analysis for advisors and teams with productivity metrics and communication analysis
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+            <div className="relative">
+              <select
+                value={selectedTeam}
+                onChange={(e) => setSelectedTeam(e.target.value)}
+                className="appearance-none bg-white border border-gray-300 px-6 py-3 pr-12 rounded-2xl font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
+              >
+                <option>All Teams</option>
+                <option>Senior Advisor</option>
+                <option>Junior Advisor</option>
+                <option>Operational team</option>
+              </select>
+              <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+            </div>
+
+            <div className="relative">
+              <select
+                value={selectedPeriod}
+                onChange={(e) => setSelectedPeriod(e.target.value)}
+                className="appearance-none bg-white border border-gray-300 px-6 py-3 pr-12 rounded-2xl font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
+              >
+                <option>This Quarter</option>
+                <option>Last Quarter</option>
+                <option>This Month</option>
+                <option>Year to Date</option>
+              </select>
+              <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+            </div>
+          </div>
+        </div>
+
+        {/* Metric Cards - Now Dynamic! */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Total Advisors */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 bg-blue-100 rounded-xl">
+                <UserGroupIcon className="w-8 h-8 text-blue-600" />
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mb-1">Total Advisors</p>
+            <p className="text-3xl font-bold text-gray-900">{metrics.totalAdvisors}</p>
+            <p className="text-green-600 text-sm mt-3">
+              {metrics.newThisQuarter > 0 ? `+${metrics.newThisQuarter} new this quarter` : 'No new this quarter'}
+            </p>
+          </div>
+
+          {/* Total AUM */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 bg-green-100 rounded-xl">
+                <CurrencyDollarIcon className="w-8 h-8 text-green-600" />
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mb-1">Total AUM</p>
+            <p className="text-3xl font-bold text-gray-900">{metrics.formattedAUM}</p>
+            <p className="text-green-600 text-sm mt-3">+8.3% this quarter</p>
+          </div>
+
+          {/* Average Performance */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 bg-purple-100 rounded-xl">
+                <ChartBarIcon className="w-8 h-8 text-purple-600" />
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mb-1">Avg Performance</p>
+            <p className="text-3xl font-bold text-gray-900">{metrics.avgPerformance}/10</p>
+            <p className="text-gray-500 text-sm mt-3">Industry: 7.2/10</p>
+          </div>
+
+          {/* Average Response Time */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 bg-yellow-100 rounded-xl">
+                <ClockIcon className="w-8 h-8 text-yellow-600" />
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mb-1">Avg Response Time</p>
+            <p className="text-3xl font-bold text-gray-900">{metrics.avgResponseHours}h</p>
+            <p className="text-green-600 text-sm mt-3">Target: &lt;4h</p>
+          </div>
+        </div>
+      </div>
+      <AdvisorPerformanceCard advisor={getFilteredAdvisors}/>
+     <Footer/>
+    </div>
+  );
+}; 
 
 export default EmployeeAnalytics;
+
+
+
