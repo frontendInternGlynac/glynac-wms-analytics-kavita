@@ -16,6 +16,9 @@ interface DashboardLayoutProps {
     avatarColor?: string;
     chatButtonColor?: string;
     showSystemAdminButton?: boolean;
+    customTitle?: React.ReactNode;
+    hideAIChatButton?: boolean;
+    hideUserAccount?: boolean;
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({
@@ -31,7 +34,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     extraHeaderContent,
     avatarColor = 'bg-blue-500',
     chatButtonColor = 'bg-amber-500 hover:bg-amber-600',
-    showSystemAdminButton = false
+    showSystemAdminButton = false,
+    customTitle,
+    hideAIChatButton = false,
+    hideUserAccount = false
 }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -161,8 +167,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 
                             {/* Left side - Title */}
                             <div className="flex items-center">
-                                <h1 className="text-xl font-semibold text-gray-900">Glynac</h1>
-                                <span className="ml-2 text-sm text-gray-500">{dashboardTitle}</span>
+                                {customTitle ? customTitle : (
+                                    <>
+                                        <h1 className="text-xl font-semibold text-gray-900">Glynac</h1>
+                                        <span className="ml-2 text-sm text-gray-500">{dashboardTitle}</span>
+                                    </>
+                                )}
                             </div>
 
                             {/* Center - System Admin Button (only on Reports & Analytics) */}
@@ -181,19 +191,24 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                             {/* Right side - Actions and User */}
                             <div className="flex items-center space-x-4">
                                 {extraHeaderContent}
-                                <button
-                                    onClick={onAIClick}
-                                    className={`${chatButtonColor} text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center`}
-                                >
-                                    <MessageSquare className="w-4 h-4 mr-2" />
-                                    Chat with AI
-                                </button>
+                                {!hideAIChatButton && (
+                                    <button
+                                        onClick={onAIClick}
+                                        className={`${chatButtonColor} text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center`}
+                                    >
+                                        <MessageSquare className="w-4 h-4 mr-2" />
+                                        Chat with AI
+                                    </button>
+                                )}
 
-                                <span className="text-sm text-gray-700 hidden sm:block">{userName}</span>
-
-                                <div className={`w-8 h-8 ${avatarColor} rounded-full flex items-center justify-center text-white text-sm`}>
-                                    {userInitials}
-                                </div>
+                                {!hideUserAccount && (
+                                    <>
+                                        <span className="text-sm text-gray-700 hidden sm:block">{userName}</span>
+                                        <div className={`w-8 h-8 ${avatarColor} rounded-full flex items-center justify-center text-white text-sm`}>
+                                            {userInitials}
+                                        </div>
+                                    </>
+                                )}
                             </div>
 
                         </div>
@@ -206,15 +221,16 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                         <div className="flex space-x-8">
                             {tabs.map((tab) => {
                                 let href = '#';
-                                if (tab.id === 'client-management') href = '/client-management';
-                                if (tab.id === 'client-onboarding') href = '/client-onboarding';
-                                if (tab.id === 'employee-analytics') href = '/employee-analytics';
-                                if (tab.id === 'alerts-center') href = '/alerts-center';
-                                if (tab.id === 'compliance-monitor') href = '/compliance-monitor';
-                                if (tab.id === 'reports-analytics') href = '/reports-analytics';
+                                if (tab.id === 'client-management') href = '/pages/client-management';
+                                if (tab.id === 'client-onboarding') href = '/pages/client-onboarding';
+                                if (tab.id === 'employee-analytics') href = '/pages/employee-analytics';
+                                if (tab.id === 'alerts-center') href = '/pages/alerts-center';
+                                if (tab.id === 'compliance-monitor') href = '/pages/compliance-monitor';
+                                if (tab.id === 'reports-analytics') href = '/pages/reports-analytics';
+                                if (tab.id === 'ai-assistant') href = '/pages/ai-assistant';
                                 if (tab.id === 'dashboard') href = '/dashboard/advisor'; // Default fallback
 
-                                const isLink = tab.id === 'client-management' || tab.id === 'dashboard' || tab.id === 'client-onboarding' || tab.id === 'employee-analytics' || tab.id === 'alerts-center' || tab.id === 'compliance-monitor' || tab.id === 'reports-analytics';
+                                const isLink = tab.id === 'client-management' || tab.id === 'dashboard' || tab.id === 'client-onboarding' || tab.id === 'employee-analytics' || tab.id === 'alerts-center' || tab.id === 'compliance-monitor' || tab.id === 'reports-analytics' || tab.id === 'ai-assistant';
 
                                 if (isLink) {
                                     return (

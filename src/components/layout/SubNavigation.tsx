@@ -11,13 +11,13 @@ const SubNavigation: React.FC<SubNavigationProps> = ({
 }) => {
     const tabs = [
         { id: 'dashboard', label: 'Dashboard', path: '/dashboard' },
-        { id: 'client-management', label: 'Client Management', path: '/client-management' },
-        { id: 'client-onboarding', label: 'Client Onboarding', path: '/client-onboarding' },
-        { id: 'employee-analytics', label: 'Employee Analytics', path: '/employee-analytics' },
-        { id: 'alerts-center', label: 'Alerts Center', path: '/alerts-center' },
-        { id: 'ai-assistant', label: 'AI Assistant', path: '/ai-assistant' },
-        { id: 'compliance-monitor', label: 'Compliance Monitor', path: '/compliance-monitor' },
-        { id: 'reports', label: 'Reports', path: '/reports' }
+        { id: 'client-management', label: 'Client Management', path: '/pages/client-management' },
+        { id: 'client-onboarding', label: 'Client Onboarding', path: '/pages/client-onboarding' },
+        { id: 'employee-analytics', label: 'Employee Analytics', path: '/pages/employee-analytics' },
+        { id: 'alerts-center', label: 'Alerts Center', path: '/pages/alerts-center' },
+        { id: 'ai-assistant', label: 'AI Assistant', path: '/pages/ai-assistant' },
+        { id: 'compliance-monitor', label: 'Compliance Monitor', path: '/pages/compliance-monitor' },
+        { id: 'reports', label: 'Reports', path: '/pages/reports-analytics' }
     ];
 
     return (
