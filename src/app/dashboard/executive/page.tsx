@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Clock } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout';
 import FirmOverview from '@/components/dashboard/executive/FirmOverview';
 import OperationalMetrics from '@/components/dashboard/executive/OperationalMetrics';
@@ -47,6 +48,15 @@ export default function ExecutivePage() {
                 <FirmOverview />
                 <OperationalMetrics />
                 <AdvisorPerformance />
+
+                {/* Footer */}
+                <div className="bg-white rounded-lg border border-gray-100 p-4 shadow-sm flex justify-between items-center text-xs text-gray-400 font-medium">
+                    <div className="flex items-center gap-2">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>Dashboard last updated: Today at 2:47 PM</span>
+                    </div>
+                    <span>Next refresh in 13 minutes</span>
+                </div>
             </div>
         </DashboardLayout>
     );

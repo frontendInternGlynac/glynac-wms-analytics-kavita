@@ -13,7 +13,7 @@ export default function ClientOnboardingPage() {
             userInitials="G"
             currentTab="client-onboarding"
             avatarColor='bg-purple-500'
-             chatButtonColor='bg-blue-600 hover:bg-blue-700'
+            chatButtonColor='bg-blue-600 hover:bg-blue-700'
         >
             <div className="max-w-7xl mx-auto space-y-6">
                 {/* Header */}

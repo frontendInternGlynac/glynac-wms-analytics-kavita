@@ -3,57 +3,11 @@
 import React from 'react';
 import PortfolioSummary from '@/components/dashboard/PortfolioSummary';
 import PerformanceInsights from '@/components/dashboard/PerformanceInsights';
-import ClientOpportunities from '@/components/dashboard/ClientOpportunities';
+import CommunicationAnalytics from '@/components/dashboard/CommunicationAnalytics';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import { portfolioSummaryData, clientsData } from '@/components/dashboard/MockData';
+import { portfolioSummaryData, clientsData, actionItems } from '@/components/dashboard/MockData';
+import { Mail, Calendar, BarChart3, LayoutDashboard, Clock } from 'lucide-react';
 
-interface PriorityAction {
-  id: string;
-  title: string;
-  description: string;
-  status?: string;
-  statusColor?: string;
-  buttonText: string;
-  buttonColor: string;
-  buttonBg: string;
-  icon: string;
-}
-
-const priorityActions: PriorityAction[] = [
-  {
-    id: 'call-martinez',
-    title: 'Call Martinez Tech Corp - Urgent',
-    description: '32 days since last contact, declining portfolio',
-    status: 'HIGH PRIORITY',
-    statusColor: 'text-red-600',
-    buttonText: 'Contact Now',
-    buttonColor: 'text-white',
-    buttonBg: 'bg-red-600 hover:bg-red-700',
-    icon: '🔴',
-  },
-  {
-    id: 'prepare-johnson',
-    title: 'Prepare Johnson Family Quarterly Review',
-    description: 'Meeting tomorrow at 2:00 PM',
-    status: 'DUE TODAY',
-    statusColor: 'text-amber-600',
-    buttonText: 'Start Prep',
-    buttonColor: 'text-white',
-    buttonBg: 'bg-amber-600 hover:bg-amber-700',
-    icon: '🟡',
-  },
-  {
-    id: 'kyc-renewals',
-    title: 'Complete KYC Renewals',
-    description: '4 clients requiring updated documentation',
-    status: 'THIS WEEK',
-    statusColor: 'text-blue-600',
-    buttonText: 'View Details',
-    buttonColor: 'text-blue-600',
-    buttonBg: 'bg-transparent border border-blue-600 hover:bg-blue-50',
-    icon: '🔵',
-  },
-];
 
 export default function AdvisorPage() {
   return (
@@ -66,369 +20,166 @@ export default function AdvisorPage() {
     >
       {/* Main Content */}
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* 1. Portfolio Summary Section */}
+        {/* 1. Portfolio Summary Section (Summary Metrics) */}
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            My Portfolio Dashboard
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Your clients, performance metrics, and daily action items
-          </p>
           <PortfolioSummary data={portfolioSummaryData} />
         </section>
 
-        {/* 2. Performance Insights + Communication Analytics (3 boxes side by side) */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Box 1: Performance Insights */}
-          <PerformanceInsights />
-
-          {/* Box 2: Email Open Rate by Client Segment */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">
-                Email Open Rate<br />by Client<br />Segment
-              </h3>
-              <div className="text-right">
-                <p className="text-xs text-gray-500">HubSpot</p>
-                <p className="text-xs text-gray-500">Powered</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {/* High Net Worth */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-700">High Net Worth</span>
-                  <span className="text-base font-bold text-gray-900">94%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-blue-600 h-2.5 rounded-full"
-                    style={{ width: '94%' }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Mass Affluent */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-700">Mass Affluent</span>
-                  <span className="text-base font-bold text-gray-900">78%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-cyan-500 h-2.5 rounded-full"
-                    style={{ width: '78%' }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Emerging Wealth */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-700">Emerging Wealth</span>
-                  <span className="text-base font-bold text-gray-900">65%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-orange-500 h-2.5 rounded-full"
-                    style={{ width: '65%' }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Overall Email Engagement */}
-              <div className="pt-4 border-t border-gray-200">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-gray-900">Overall Email Engagement</span>
-                  <span className="text-base font-bold text-gray-900">79%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Box 3: Response Time by Communication Method */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">
-              Response Time by<br />Communication<br />Method
-            </h3>
-
-            <div className="space-y-5">
-              {/* Email */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-900">Email</span>
-                  <span className="text-base font-bold text-gray-900">2.3h</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-teal-500 h-2.5 rounded-full"
-                    style={{ width: '45%' }}
-                  ></div>
-                </div>
-                <p className="text-xs text-gray-600 mt-2">
-                  45% of communications via this<br />channel
-                </p>
-              </div>
-
-              {/* Phone */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-900">Phone</span>
-                  <span className="text-base font-bold text-gray-900">0.8h</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-teal-500 h-2.5 rounded-full"
-                    style={{ width: '32%' }}
-                  ></div>
-                </div>
-                <p className="text-xs text-gray-600 mt-2">
-                  32% of communications via this<br />channel
-                </p>
-              </div>
-
-              {/* In-Person */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-900">In-Person</span>
-                  <span className="text-base font-bold text-gray-900">1.2h</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-teal-500 h-2.5 rounded-full"
-                    style={{ width: '23%' }}
-                  ></div>
-                </div>
-                <p className="text-xs text-gray-600 mt-2">
-                  23% of communications via this<br />channel
-                </p>
-              </div>
-
-              {/* Fastest Response Note */}
-              <div className="pt-3 border-t border-gray-200 mt-4">
-                <p className="text-xs text-gray-600">
-                  📊 Fastest response via Phone (0.8h<br />average)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 3. Client Opportunities & Alerts + Communication Hub (2 columns) */}
+        {/* 2. Middle Section: Action Items | [Hub + Schedule] (Equal Width) */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Client Opportunities & Alerts */}
-          <ClientOpportunities />
+          {/* Left Side: Action Items Today */}
+          <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm overflow-hidden flex flex-col">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-red-500 text-lg">⚠️</span>
+              <h2 className="text-lg font-bold text-gray-900">Action Items Today</h2>
+            </div>
+            <div className="space-y-3 flex-1">
+              {[
+                { id: '1', title: 'Overdue Client Contacts', description: 'Johnson, Martinez, Liu families', count: 3, color: 'red' },
+                { id: '2', title: 'Meeting Prep Required', description: "Tomorrow's client reviews", count: 5, color: 'amber' },
+                { id: '3', title: 'Document Reviews', description: 'Investment proposals pending', count: 2, color: 'orange' },
+                { id: '4', title: 'Compliance Tasks', description: 'KYC renewals due', count: 4, color: 'blue' }
+              ].map((item) => (
+                <div
+                  key={item.id}
+                  className={`pl-4 border-l-4 rounded-r-md py-2.5 flex items-center justify-between ${item.color === 'red' ? 'border-red-500 bg-red-50' :
+                    item.color === 'amber' ? 'border-amber-500 bg-amber-50' :
+                      item.color === 'orange' ? 'border-orange-500 bg-orange-50' :
+                        'border-blue-500 bg-blue-50'
+                    }`}
+                >
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">{item.title}</p>
+                    <p className="text-[11px] text-gray-600 mt-0.5">{item.description}</p>
+                  </div>
+                  <div className="pr-4 font-bold text-base text-gray-700">{item.count}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          {/* Communication Hub */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-gray-900">
-                Communication Hub
-              </h2>
-              <a
-                href="#"
-                className="text-sm font-medium text-blue-600 hover:text-blue-700"
-              >
-                View Details →
-              </a>
+          {/* Right Side: Merged Hub & Schedule Box */}
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm flex flex-col h-full">
+            {/* Communication Hub */}
+            <div className="p-5">
+              <div className="mb-4">
+                <h2 className="text-lg font-bold text-gray-900">Communication Hub</h2>
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center py-0.5">
+                  <span className="text-sm text-gray-600">Avg Response Time</span>
+                  <span className="text-sm font-bold text-teal-600">2.3 hours</span>
+                </div>
+                <div className="flex justify-between items-center py-0.5">
+                  <span className="text-sm text-gray-600">Meetings This Week</span>
+                  <span className="text-sm font-bold text-gray-900">18</span>
+                </div>
+                <div className="flex justify-between items-center py-0.5">
+                  <span className="text-sm text-gray-600">Client Sentiment</span>
+                  <span className="text-sm font-bold text-green-600">Positive (4.6/5)</span>
+                </div>
+                <div className="flex justify-between items-center py-0.5">
+                  <span className="text-sm text-gray-600">Follow-ups Pending</span>
+                  <span className="text-sm font-bold text-orange-600">7</span>
+                </div>
+              </div>
             </div>
 
-            {/* Hub Metrics */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                <span className="text-sm text-gray-700">
-                  Avg Response Time
-                </span>
-                <span className="text-lg font-bold text-teal-600">2.3 hours</span>
-              </div>
+            {/* Thin Grey Line Divider */}
+            <div className="px-5">
+              <div className="border-t border-gray-100 w-full"></div>
+            </div>
 
-              <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                <span className="text-sm text-gray-700">
-                  Meetings This Week
-                </span>
-                <span className="text-lg font-bold text-gray-900">18</span>
+            {/* This Week's Schedule */}
+            <div className="p-5">
+              <div className="mb-4">
+                <h2 className="text-lg font-bold text-gray-900">This Week's Schedule</h2>
               </div>
-
-              <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                <span className="text-sm text-gray-700">Client Sentiment</span>
-                <span className="text-lg font-bold text-green-600">
-                  Positive (4.6/5)
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between py-3">
-                <span className="text-sm text-gray-700">Follow-ups Pending</span>
-                <span className="text-lg font-bold text-orange-600">7</span>
-              </div>
-
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-sm font-medium text-gray-700 mb-3">
-                  This Week's Schedule
-                </p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div className="flex justify-between">
-                    <span>Today</span>
-                    <span className="font-medium">4 meetings</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Tomorrow</span>
-                    <span className="font-medium">5 meetings</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Rest of Week</span>
-                    <span className="font-medium">9 meetings</span>
-                  </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600 font-medium">Today</span>
+                  <span className="font-bold text-gray-900">4 meetings</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600 font-medium">Tomorrow</span>
+                  <span className="font-bold text-gray-900">5 meetings</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600 font-medium">Rest of Week</span>
+                  <span className="font-bold text-gray-900">9 meetings</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4. Today's Priority Actions */}
-        <section>
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
-            Today's Priority Actions
-          </h2>
 
-          <div className="space-y-3">
-            {priorityActions.map((action) => (
-              <div
-                key={action.id}
-                className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xl">{action.icon}</span>
-                      <h3 className="text-base font-bold text-gray-900">
-                        {action.title}
-                      </h3>
-                    </div>
-                    <p className="text-sm text-gray-600">{action.description}</p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    {action.status && (
-                      <span
-                        className={`text-xs font-bold ${action.statusColor} whitespace-nowrap`}
-                      >
-                        {action.status}
-                      </span>
-                    )}
-                    <button
-                      className={`px-4 py-2 rounded font-medium text-sm ${action.buttonBg} ${action.buttonColor} whitespace-nowrap transition-colors`}
-                    >
-                      {action.buttonText}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 5. My Clients Table */}
-        <section className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
+        {/* 3. My Clients Table Section */}
+        <section className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
             <h2 className="text-lg font-bold text-gray-900">My Clients</h2>
             <div className="flex gap-2">
-              <select className="px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-700">
+              <select className="text-xs border-gray-200 rounded px-2 py-1">
                 <option>All Clients</option>
               </select>
-              <button className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg border border-gray-200">
-                Export
-              </button>
+              <button className="text-xs font-medium text-gray-600 border border-gray-200 rounded px-3 py-1 hover:bg-gray-50">Export</button>
             </div>
           </div>
-
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    CLIENT
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    AUM
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    LAST CONTACT
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    HEALTH SCORE
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    NEXT MEETING
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    ACTIONS
-                  </th>
+            <table className="w-full text-sm text-left">
+              <thead className="bg-gray-50/50 text-gray-400 uppercase text-[10px] font-bold tracking-widest border-b border-gray-100">
+                <tr>
+                  <th className="px-6 py-4">Client</th>
+                  <th className="px-6 py-4">Aum</th>
+                  <th className="px-6 py-4">Last Contact</th>
+                  <th className="px-6 py-4 text-center">Health Score</th>
+                  <th className="px-6 py-4">Next Meeting</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-gray-100">
                 {clientsData.map((client) => (
-                  <tr
-                    key={client.id}
-                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="py-4 px-4">
-                      <div>
-                        <p className="font-medium text-gray-900">
-                          {client.name}
-                        </p>
-                        <p className="text-xs text-gray-600">{client.type}</p>
+                  <tr key={client.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-3.5 transition-colors">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs ${client.name.includes('Johnson') ? 'bg-blue-500' :
+                          client.name.includes('Martinez') ? 'bg-purple-500' : 'bg-green-500'
+                          }`}>
+                          {client.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900 text-[13px]">{client.name}</p>
+                          <p className="text-[10px] text-gray-400 font-medium uppercase tracking-tight">{client.type}</p>
+                        </div>
                       </div>
                     </td>
-                    <td className="py-4 px-4">
+                    <td className="px-6 py-3.5">
                       <div>
-                        <p className="font-medium text-gray-900">
-                          {client.aum}
-                        </p>
-                        <p
-                          className={`text-xs ${client.ytdChange.includes('-')
-                            ? 'text-red-600'
-                            : 'text-green-600'
-                            }`}
-                        >
+                        <p className="font-bold text-gray-900 text-[13px]">{client.aum}</p>
+                        <p className={`text-[10px] font-bold ${client.ytdChange.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                           {client.ytdChange} YTD
                         </p>
                       </div>
                     </td>
-                    <td className="py-4 px-4">
-                      <p
-                        className={`text-sm ${client.lastContact.includes('ago')
-                          ? 'text-gray-600'
-                          : 'text-red-600 font-medium'
-                          }`}
-                      >
-                        {client.lastContact}
-                      </p>
+                    <td className="px-6 py-3.5">
+                      <p className="text-gray-900 text-[13px] font-medium">{client.lastContact}</p>
+                      <p className="text-[10px] text-gray-400">{client.name.includes('Johnson') ? 'Phone call' : client.name.includes('Martinez') ? 'Email' : 'In-person meeting'}</p>
                     </td>
-                    <td className="py-4 px-4">
-                      <span
-                        className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getHealthScoreBadge(
-                          client.healthScore,
-                        )}`}
-                      >
-                        {client.healthScore === 'excellent' &&
-                          '✓ Excellent (9.2)'}
-                        {client.healthScore === 'good' && '◐ Good (7.8)'}
-                        {client.healthScore === 'at-risk' && '⚠ At Risk (3.1)'}
+                    <td className="px-6 py-3.5 text-center">
+                      <span className={`px-3 py-1 rounded-full text-[9px] font-bold ${client.healthScore === 'excellent' ? 'bg-green-50 text-green-600 border border-green-100' :
+                        client.healthScore === 'good' ? 'bg-amber-50 text-amber-600 border border-amber-100' :
+                          'bg-red-50 text-red-600 border border-red-100'
+                        }`}>
+                        {client.healthScore === 'excellent' ? 'Excellent (9.2)' :
+                          client.healthScore === 'good' ? 'Good (7.8)' : 'At Risk (3.1)'}
                       </span>
                     </td>
-                    <td className="py-4 px-4">
-                      <p className="text-sm text-gray-600">
-                        {client.nextMeeting}
-                      </p>
+                    <td className="px-6 py-3.5">
+                      <p className="text-gray-900 text-[13px] font-medium leading-tight">{client.nextMeeting}</p>
+                      <p className="text-[10px] text-gray-400">{client.name.includes('Johnson') ? 'Quarterly Review' : client.name.includes('Martinez') ? 'Schedule needed' : 'Strategy Meeting'}</p>
                     </td>
-                    <td className="py-4 px-4">
-                      <button
-                        className={`text-sm font-medium ${client.action?.includes('Contact')
-                          ? 'text-red-600 hover:text-red-700'
-                          : 'text-blue-600 hover:text-blue-700'
-                          }`}
-                      >
+                    <td className="px-6 py-3.5 text-right">
+                      <button className="text-xs font-bold transition-colors text-blue-600 hover:text-blue-700">
                         {client.action}
                       </button>
                     </td>
@@ -437,28 +188,165 @@ export default function AdvisorPage() {
               </tbody>
             </table>
           </div>
+          <div className="px-6 py-4 bg-gray-50/50 border-t border-gray-100 flex justify-between items-center">
+            <p className="text-xs text-gray-500 font-medium tracking-tight">Showing 3 of 73 clients</p>
+            <button className="text-blue-600 text-xs font-bold hover:underline">View All Clients →</button>
+          </div>
+        </section>
 
-          <div className="mt-4 text-sm text-gray-600">
-            <p>Showing 3 of {clientsData.length} clients</p>
+        {/* 4. Bottom Analytics Section: Performance Insights & Communication Analytics */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <PerformanceInsights />
+          <CommunicationAnalytics />
+        </section>
+
+        {/* 5. NEW SECTION: Client Opportunities & Alerts | Communication Hub (Actions) */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left: Client Opportunities & Alerts */}
+          <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
+            <div className="mb-4">
+              <h2 className="text-lg font-bold text-gray-900">Client Opportunities & Alerts</h2>
+            </div>
+            <div className="space-y-3">
+              {[
+                { label: 'High-Risk Clients', desc: 'No contact 30+ days', value: '3', color: 'bg-red-50', border: 'border-red-400', textColor: 'text-red-600' },
+                { label: 'AUM Concentration', desc: 'Top 3 clients = 67% of AUM', value: 'Risk', color: 'bg-orange-50', border: 'border-orange-400', textColor: 'text-orange-600' },
+                { label: 'Compliance Due', desc: 'KYC renewals needed', value: '4', color: 'bg-blue-50', border: 'border-blue-400', textColor: 'text-blue-600' },
+                { label: 'Growth Opportunities', desc: 'Potential upsells identified', value: '7', color: 'bg-green-50', border: 'border-green-400', textColor: 'text-green-600' },
+                { label: 'Document Collection', desc: 'Pending client submissions', value: '6', color: 'bg-purple-50', border: 'border-purple-400', textColor: 'text-purple-600' },
+              ].map((item, idx) => (
+                <div key={idx} className={`p-3 rounded-md border-l-4 ${item.color} ${item.border} flex justify-between items-center`}>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">{item.label}</p>
+                    <p className="text-[11px] text-gray-500 font-medium">{item.desc}</p>
+                  </div>
+                  <span className={`text-sm font-bold ${item.textColor}`}>{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Communication Hub (Actions) */}
+          <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold text-gray-900">Communication Hub</h2>
+              <button className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                <span className="text-sm">📋</span> View Details
+              </button>
+            </div>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500 font-medium">Avg Response Time</span>
+                <span className="text-sm font-bold text-green-600">2.3 hours</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500 font-medium">Meetings This Week</span>
+                <span className="text-sm font-bold text-gray-900">18</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500 font-medium">Outstanding Tasks</span>
+                <span className="text-sm font-bold text-red-500">6</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500 font-medium">Email Engagement</span>
+                <span className="text-sm font-bold text-green-600">87%</span>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 space-y-3">
+                <button className="flex items-center gap-3 text-sm text-gray-700 font-medium hover:text-blue-600 w-full group">
+                  <Mail className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                  Compose client update
+                </button>
+                <button className="flex items-center gap-3 text-sm text-gray-700 font-medium hover:text-blue-600 w-full group">
+                  <Calendar className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                  Schedule follow-ups
+                </button>
+                <button className="flex items-center gap-3 text-sm text-gray-700 font-medium hover:text-blue-600 w-full group">
+                  <BarChart3 className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                  View communication reports
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Today's Priority Actions Section */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-gray-900">Today's Priority Actions</h2>
+          <div className="bg-white rounded-lg border border-gray-100 p-6 shadow-sm space-y-4">
+            {[
+              {
+                id: '1',
+                title: 'Call Martinez Tech Corp - Urgent',
+                description: '32 days since last contact, declining portfolio',
+                status: 'HIGH PRIORITY',
+                action: 'Contact Now',
+                bgColor: 'bg-red-50',
+                borderColor: 'border-red-100',
+                dotColor: 'bg-red-500',
+                btnColor: 'bg-red-600 hover:bg-red-700',
+                statusColor: 'text-red-600'
+              },
+              {
+                id: '2',
+                title: 'Prepare Johnson Family Quarterly Review',
+                description: 'Meeting tomorrow at 2:00 PM',
+                status: 'DUE TODAY',
+                action: 'Start Prep',
+                bgColor: 'bg-amber-50',
+                borderColor: 'border-amber-100',
+                dotColor: 'bg-amber-500',
+                btnColor: 'bg-amber-500 hover:bg-amber-600',
+                statusColor: 'text-amber-600'
+              },
+              {
+                id: '3',
+                title: 'Complete KYC Renewals',
+                description: '4 clients requiring updated documentation',
+                status: 'THIS WEEK',
+                action: 'View Details',
+                bgColor: 'bg-blue-50',
+                borderColor: 'border-blue-100',
+                dotColor: 'bg-blue-500',
+                btnColor: 'bg-blue-600 hover:bg-blue-700',
+                statusColor: 'text-blue-600'
+              }
+            ].map((item) => (
+              <div
+                key={item.id}
+                className={`${item.bgColor} ${item.borderColor} border rounded-xl p-4 flex items-center justify-between transition-all hover:shadow-md`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-2.5 h-2.5 rounded-full ${item.dotColor} shrink-0`} />
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">{item.title}</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">{item.description}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-6">
+                  <span className={`text-[10px] font-bold tracking-widest ${item.statusColor}`}>
+                    {item.status}
+                  </span>
+                  <button className={`${item.btnColor} text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap`}>
+                    {item.action}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 7. Footer Info */}
+        <section className="bg-white rounded-lg border border-gray-100 p-4 shadow-sm flex justify-between items-center text-xs text-gray-400 font-medium">
+          <div className="flex items-center gap-2">
+            <Clock className="w-3.5 h-3.5" />
+            <span>Dashboard last updated: Today at 2:47 PM</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span>Next refresh in 13 minutes</span>
           </div>
         </section>
       </div>
-    </DashboardLayout >
+    </DashboardLayout>
   );
-}
-
-/**
- * Helper function to get health score badge styling
- */
-function getHealthScoreBadge(score: string): string {
-  switch (score) {
-    case 'excellent':
-      return 'bg-green-50 text-green-700 border border-green-200';
-    case 'good':
-      return 'bg-yellow-50 text-yellow-700 border border-yellow-200';
-    case 'at-risk':
-      return 'bg-red-50 text-red-700 border border-red-200';
-    default:
-      return 'bg-gray-50 text-gray-700 border border-gray-200';
-  }
 }

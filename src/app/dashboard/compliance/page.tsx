@@ -345,87 +345,85 @@ export default function CompliancePage() {
                 {/* Recent Actions & Monitoring */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Recent Compliance Actions */}
-                    <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-                        <div className="p-6 border-b border-gray-200">
-                            <h3 className="text-lg font-bold text-gray-900">Recent Compliance Actions</h3>
-                        </div>
-                        <div className="divide-y divide-gray-100">
+                    <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm overflow-hidden">
+                        <h3 className="text-lg font-bold text-gray-900 mb-6">Recent Compliance Actions</h3>
+                        <div className="space-y-4">
                             {[
-                                { action: "Alert Review", desc: "Flagged email review", user: "Sarah Jenkins", time: "2 mins ago", status: "Completed" },
-                                { action: "Report Generated", desc: "Weekly risk summary", user: "System", time: "15 mins ago", status: "Success" },
-                                { action: "Policy Ack", desc: "Code of Ethics signed", user: "Mike Ross", time: "1 hour ago", status: "Verified" },
-                                { action: "Trade Blotter", desc: "Exceptions cleared", user: "Robert M.", time: "2 hours ago", status: "Approved" },
+                                {
+                                    title: "KYC Documentation Updated",
+                                    desc: "Johnson Family Trust - Identity verification completed",
+                                    time: "2 hours ago",
+                                    dotColor: "bg-green-500"
+                                },
+                                {
+                                    title: "Communication Alert Resolved",
+                                    desc: "Off-channel usage warning cleared - A. Rodriguez",
+                                    time: "4 hours ago",
+                                    dotColor: "bg-blue-500"
+                                },
+                                {
+                                    title: "Policy Update Distributed",
+                                    desc: "New SEC guidance sent to all advisors for acknowledgment",
+                                    time: "Yesterday",
+                                    dotColor: "bg-purple-500"
+                                },
+                                {
+                                    title: "Risk Assessment Completed",
+                                    desc: "Martinez Tech Corp re-classified as medium risk",
+                                    time: "2 days ago",
+                                    dotColor: "bg-orange-500"
+                                }
                             ].map((item, idx) => (
-                                <div key={idx} className="p-4 flex items-center justify-between hover:bg-gray-50">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-2 bg-gray-100 rounded-full">
-                                            {item.user === "System" ? <Server className="w-4 h-4 text-gray-600" /> : <User className="w-4 h-4 text-gray-600" />}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-900">{item.action}</p>
-                                            <p className="text-xs text-gray-500">{item.desc} • <span className="text-gray-400">{item.user}</span></p>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded">{item.status}</span>
-                                        <p className="text-xs text-gray-400 mt-1">{item.time}</p>
+                                <div key={idx} className="p-4 bg-gray-50 rounded-xl flex items-start gap-4 transition-all hover:bg-gray-100">
+                                    <div className={`w-2 h-2 rounded-full ${item.dotColor} mt-1.5 shrink-0`} />
+                                    <div>
+                                        <h4 className="text-sm font-bold text-gray-900">{item.title}</h4>
+                                        <p className="text-xs text-gray-600 mt-0.5">{item.desc}</p>
+                                        <p className="text-[10px] text-gray-400 mt-1 font-medium">{item.time}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Monitoring Summary */}
-                    <div className="bg-gray-900 rounded-lg border border-gray-800 shadow-sm overflow-hidden text-white">
-                        <div className="p-6 border-b border-gray-800 flex justify-between items-center">
-                            <h3 className="text-lg font-bold text-white">Monitoring Summary</h3>
-                            <div className="flex items-center gap-2">
-                                <span className="relative flex h-3 w-3">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                                </span>
-                                <span className="text-xs text-gray-400">Live</span>
+                    {/* Communication Monitoring Summary */}
+                    <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm overflow-hidden">
+                        <h3 className="text-lg font-bold text-gray-900 mb-6">Communication Monitoring Summary</h3>
+                        <div className="space-y-5">
+                            <div className="flex justify-between items-center group">
+                                <span className="text-sm text-gray-600 font-medium">Messages Processed Today</span>
+                                <span className="text-sm font-bold text-gray-900">1,247</span>
                             </div>
-                        </div>
-                        <div className="p-6">
-                            <div className="grid grid-cols-2 gap-6 mb-8">
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">System Status</p>
-                                    <div className="flex items-center gap-2 text-green-400">
-                                        <CheckCircle2 className="w-5 h-5" />
-                                        <span className="font-bold">Operational</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">Last Scan</p>
-                                    <div className="flex items-center gap-2 text-blue-400">
-                                        <Clock className="w-5 h-5" />
-                                        <span className="font-bold">15 mins ago</span>
-                                    </div>
-                                </div>
+                            <div className="flex justify-between items-center group">
+                                <span className="text-sm text-gray-600 font-medium">Flagged for Review</span>
+                                <span className="text-sm font-bold text-orange-500">8</span>
+                            </div>
+                            <div className="flex justify-between items-center group">
+                                <span className="text-sm text-gray-600 font-medium">Policy Violations Detected</span>
+                                <span className="text-sm font-bold text-red-500">3</span>
+                            </div>
+                            <div className="flex justify-between items-center group">
+                                <span className="text-sm text-gray-600 font-medium">Archive Success Rate</span>
+                                <span className="text-sm font-bold text-green-600">99.8%</span>
                             </div>
 
-                            <div className="space-y-4">
-                                <div className="bg-gray-800 p-4 rounded-lg flex justify-between items-center">
-                                    <div className="flex items-center gap-3">
-                                        <ShieldCheck className="w-5 h-5 text-green-500" />
-                                        <span className="text-sm">Active Monitors</span>
-                                    </div>
-                                    <span className="font-bold">12/12</span>
-                                </div>
-                                <div className="bg-gray-800 p-4 rounded-lg flex justify-between items-center">
-                                    <div className="flex items-center gap-3">
-                                        <Server className="w-5 h-5 text-blue-500" />
-                                        <span className="text-sm">API Connections</span>
-                                    </div>
-                                    <span className="font-bold text-green-400">Stable</span>
-                                </div>
-                                <div className="bg-gray-800 p-4 rounded-lg flex justify-between items-center">
-                                    <div className="flex items-center gap-3">
-                                        <Activity className="w-5 h-5 text-purple-500" />
-                                        <span className="text-sm">Data Throughput</span>
-                                    </div>
-                                    <span className="font-bold">845 MB/s</span>
+                            <div className="pt-6 border-t border-gray-100">
+                                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Channels Monitored</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {[
+                                        { name: 'Email', color: 'bg-blue-50 text-blue-600 border-blue-100' },
+                                        { name: 'Microsoft Teams', color: 'bg-green-50 text-green-600 border-green-100' },
+                                        { name: 'Slack', color: 'bg-purple-50 text-purple-600 border-purple-100' },
+                                        { name: 'Phone Calls', color: 'bg-orange-50 text-orange-600 border-orange-100' },
+                                        { name: '+3 more', color: 'bg-gray-50 text-gray-600 border-gray-200' }
+                                    ].map((channel, i) => (
+                                        <span
+                                            key={i}
+                                            className={`${channel.color} text-[10px] font-bold px-3 py-1.5 rounded-full border shadow-sm transition-transform hover:scale-105 cursor-default`}
+                                        >
+                                            {channel.name}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -433,13 +431,12 @@ export default function CompliancePage() {
                 </div>
 
                 {/* Footer */}
-                <div className="border-t border-gray-200 pt-6 flex justify-between items-center text-sm text-gray-500">
-                    <p>Last updated: Today at 09:42 AM</p>
-                    <div className="flex gap-4">
-                        <button className="hover:text-gray-900">Privacy Policy</button>
-                        <button className="hover:text-gray-900">Terms of Service</button>
-                        <button className="hover:text-gray-900">Help Center</button>
+                <div className="bg-white rounded-lg border border-gray-100 p-4 shadow-sm flex justify-between items-center text-xs text-gray-400 font-medium mt-8">
+                    <div className="flex items-center gap-2">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>Dashboard last updated: Today at 2:47 PM</span>
                     </div>
+                    <span>Next refresh in 13 minutes</span>
                 </div>
             </div>
         </DashboardLayout>

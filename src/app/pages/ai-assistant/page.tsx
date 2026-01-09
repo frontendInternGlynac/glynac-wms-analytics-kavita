@@ -10,13 +10,35 @@ export default function AIAssistantPage() {
             id: '1',
             role: 'assistant',
             content: (
-                <div className="space-y-4">
-                    <p className="text-xl font-medium text-gray-900">
-                        Hello, I'm Ava, your advanced wealth analytics assistant.
-                    </p>
-                    <p className="text-gray-600 leading-relaxed">
-                        I have access to your complete firm data including client portfolios, compliance records, and operational metrics. How can I help you optimize your practice today?
-                    </p>
+                <div className="bg-[#f9fafb] border border-gray-200 rounded-2xl p-3 max-w-[750px] shadow-sm">
+                    <div className="space-y-1.5">
+                        <h2 className="text-[18px] font-bold text-gray-900 leading-tight">
+                            Hello! I'm Ava, your Knowledge Agent.
+                        </h2>
+                        <p className="text-[14px] text-gray-700 leading-relaxed">
+                            I can help you with comprehensive client queries, communication history analysis, AUM and portfolio insights, and relationship intelligence. I have access to all your connected systems including HubSpot, Addepar, Black Diamond, and Salesforce.
+                        </p>
+                        <div className="space-y-1">
+                            <h3 className="text-[14px] font-bold text-gray-700">What I can do:</h3>
+                            <ul className="space-y-1">
+                                {[
+                                    'Analyze client portfolios and investment patterns',
+                                    'Generate comprehensive client reports',
+                                    'Track communication history and engagement',
+                                    'Identify opportunities and risks across your book',
+                                    'Synthesize data from multiple platforms'
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-center space-x-3 text-[14px] text-gray-700">
+                                        <div className="w-1.5 h-1.5 bg-gray-600 rounded-full flex-shrink-0" />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <p className="text-[14px] text-gray-700 font-medium">
+                            What would you like to know?
+                        </p>
+                    </div>
                 </div>
             )
         },
@@ -34,40 +56,39 @@ export default function AIAssistantPage() {
                         <span className="font-bold">Analysis Complete!</span> I found 7 clients matching your criteria by analyzing data from Addepar (portfolio allocations), HubSpot (meeting history), and Black Diamond (client communications).
                     </p>
 
-                    <div className="bg-[#fff1f2] border border-[#fecdd3] rounded-xl p-4 space-y-2">
+                    <div className="bg-[#fff1f2] border border-[#fecdd3] rounded-xl p-3 space-y-1.5">
                         <div className="flex items-center space-x-2 text-[#9f1239]">
-                            <AlertTriangle className="w-5 h-5" />
-                            <h4 className="font-bold text-[15px]">High Priority Clients (Immediate Attention)</h4>
+                            <AlertTriangle className="w-4 h-4" />
+                            <h4 className="font-bold text-[14px]">High Priority Clients (Immediate Attention)</h4>
                         </div>
-
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                             {[
                                 { name: 'Johnson Family Office', pe: '+2.3M (18% → 31%)', review: '8 weeks ago' },
                                 { name: 'Thompson Holdings', pe: '+1.8M (12% → 28%)', review: '6 weeks ago' },
                                 { name: 'Martinez Trust', pe: '+3.1M (8% → 24%)', review: '10 weeks ago' }
                             ].map((client, i) => (
-                                <div key={i} className="flex justify-between items-start text-[14px]">
+                                <div key={i} className="flex justify-between items-center text-[13px] border-b border-[#fecdd3]/30 last:border-0 pb-1 last:pb-0">
                                     <span className="font-semibold text-gray-900">{client.name}</span>
-                                    <div className="text-right">
+                                    <div className="flex items-center gap-3">
                                         <p className="text-[#e11d48] font-bold">PE: {client.pe}</p>
-                                        <p className="text-gray-500 text-[12px]">Last Review: {client.review}</p>
+                                        <p className="text-gray-500 text-[11px] font-medium leading-none mb-0.5">Last Review: {client.review}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    <div className="bg-[#eff6ff] border border-[#dbeafe] rounded-xl p-4 space-y-2">
-                        <h4 className="font-bold text-[#1e40af] text-[15px]">Key Insights:</h4>
-                        <ul className="space-y-1">
+                    <div className="bg-[#eff6ff] border border-[#dbeafe] rounded-xl p-3 space-y-1.5">
+                        <h4 className="font-bold text-[#1e40af] text-[14px]">Key Insights:</h4>
+                        <ul className="space-y-0.5">
                             {[
                                 'Average PE allocation increase: +18.2% of portfolio',
                                 'All 7 clients exceed $5M AUM threshold',
                                 'Combined missed review value: $47.3M in AUM',
                                 '3 clients have upcoming tax implications'
                             ].map((insight, i) => (
-                                <li key={i} className="flex items-start space-x-2 text-[14px] text-[#1e40af]">
-                                    <div className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full mt-1 flex-shrink-0" />
+                                <li key={i} className="flex items-center space-x-2 text-[13px] text-[#1e40af]">
+                                    <div className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full flex-shrink-0" />
                                     <span>{insight}</span>
                                 </li>
                             ))}
@@ -146,40 +167,40 @@ export default function AIAssistantPage() {
                             <span className="font-bold">Analysis Complete!</span> I found 7 clients matching your criteria by analyzing data from Addepar (portfolio allocations), HubSpot (meeting history), and Black Diamond (client communications).
                         </p>
 
-                        <div className="bg-[#fff1f2] border border-[#fecdd3] rounded-xl p-4 space-y-2">
+                        <div className="bg-[#fff1f2] border border-[#fecdd3] rounded-xl p-3 space-y-1.5">
                             <div className="flex items-center space-x-2 text-[#9f1239]">
-                                <AlertTriangle className="w-5 h-5" />
-                                <h4 className="font-bold text-[15px]">High Priority Clients (Immediate Attention)</h4>
+                                <AlertTriangle className="w-4 h-4" />
+                                <h4 className="font-bold text-[14px]">High Priority Clients (Immediate Attention)</h4>
                             </div>
 
-                            <div className="space-y-2">
+                            <div className="space-y-1">
                                 {[
                                     { name: 'Johnson Family Office', pe: '+2.3M (18% → 31%)', review: '8 weeks ago' },
                                     { name: 'Thompson Holdings', pe: '+1.8M (12% → 28%)', review: '6 weeks ago' },
                                     { name: 'Martinez Trust', pe: '+3.1M (8% → 24%)', review: '10 weeks ago' }
                                 ].map((client, i) => (
-                                    <div key={i} className="flex justify-between items-start text-[14px]">
+                                    <div key={i} className="flex justify-between items-center text-[13px] border-b border-[#fecdd3]/30 last:border-0 pb-1 last:pb-0">
                                         <span className="font-semibold text-gray-900">{client.name}</span>
-                                        <div className="text-right">
+                                        <div className="flex items-center gap-3">
                                             <p className="text-[#e11d48] font-bold">PE: {client.pe}</p>
-                                            <p className="text-gray-500 text-[12px]">Last Review: {client.review}</p>
+                                            <p className="text-gray-500 text-[11px] font-medium leading-none mb-0.5">Last Review: {client.review}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="bg-[#eff6ff] border border-[#dbeafe] rounded-xl p-4 space-y-2">
-                            <h4 className="font-bold text-[#1e40af] text-[15px]">Key Insights:</h4>
-                            <ul className="space-y-1">
+                        <div className="bg-[#eff6ff] border border-[#dbeafe] rounded-xl p-3 space-y-1.5">
+                            <h4 className="font-bold text-[#1e40af] text-[14px]">Key Insights:</h4>
+                            <ul className="space-y-0.5">
                                 {[
                                     'Average PE allocation increase: +18.2% of portfolio',
                                     'All 7 clients exceed $5M AUM threshold',
                                     'Combined missed review value: $47.3M in AUM',
                                     '3 clients have upcoming tax implications'
                                 ].map((insight, i) => (
-                                    <li key={i} className="flex items-start space-x-2 text-[14px] text-[#1e40af]">
-                                        <div className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full mt-1.5 flex-shrink-0" />
+                                    <li key={i} className="flex items-center space-x-2 text-[13px] text-[#1e40af]">
+                                        <div className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full flex-shrink-0" />
                                         <span>{insight}</span>
                                     </li>
                                 ))}
@@ -285,7 +306,6 @@ export default function AIAssistantPage() {
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="text-[12px] font-bold text-gray-400 uppercase tracking-wider mr-1">Try asking:</span>
                             {[
-                                "PE allocations",
                                 "Tax deadlines this quarter",
                                 "Communication gaps analysis",
                                 "Rebalancing opportunities",

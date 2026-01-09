@@ -485,7 +485,7 @@ export default function OperationsPage() {
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between pt-8 pb-4 text-gray-500 text-sm">
+            <div className="bg-white rounded-lg border border-gray-100 p-4 shadow-sm flex items-center justify-between text-gray-400 text-xs font-medium mt-8">
                 <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     <span>Dashboard last updated: Today at 2:47 PM</span>

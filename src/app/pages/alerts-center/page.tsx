@@ -13,7 +13,7 @@ export default function AlertsCenterPage() {
             userInitials="R"
             currentTab="alerts-center"
             avatarColor='bg-red-500'
-             chatButtonColor='bg-blue-600 hover:bg-blue-700'
+            chatButtonColor='bg-blue-600 hover:bg-blue-700'
         >
             <div className="max-w-7xl mx-auto space-y-8">
                 {/* Header */}

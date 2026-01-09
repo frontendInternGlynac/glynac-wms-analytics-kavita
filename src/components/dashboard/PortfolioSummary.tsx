@@ -53,33 +53,26 @@ interface PortfolioSummaryProps {
   data?: SummaryMetric[];
 }
 
-const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({ 
-  data = mockPortfolioData 
+const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({
+  data = mockPortfolioData
 }) => {
   return (
     <div className="w-full">
       {/* Section Header */}
-      <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+      <div className="mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
           My Portfolio Dashboard
         </h2>
-        <p className="text-gray-600 mt-2">
+        <p className="text-xs text-gray-500 mt-1">
           Your clients, performance metrics, and daily action items
         </p>
       </div>
 
       {/* Summary Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {data.map((metric) => (
           <SummaryCard key={metric.id} metric={metric} />
         ))}
-      </div>
-
-      {/* Additional Info */}
-      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <p className="text-sm text-blue-800">
-          💡 <strong>Tip:</strong> Hover over cards to see more details. Click any metric to view detailed analytics.
-        </p>
       </div>
     </div>
   );

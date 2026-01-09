@@ -33,7 +33,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     onAIClick = () => console.log('AI clicked'),
     extraHeaderContent,
     avatarColor = 'bg-blue-500',
-    chatButtonColor = 'bg-amber-500 hover:bg-amber-600',
+    chatButtonColor = 'bg-blue-600 hover:bg-blue-700',
     showSystemAdminButton = false,
     customTitle,
     hideAIChatButton = false,
@@ -111,7 +111,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                             <span className="text-white font-bold text-sm">G</span>
                         </div>
                         <span className={`font-semibold text-gray-900 transition-all duration-300 ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
-                            Glynac
+                            Glynac WMS
                         </span>
                     </div>
 
