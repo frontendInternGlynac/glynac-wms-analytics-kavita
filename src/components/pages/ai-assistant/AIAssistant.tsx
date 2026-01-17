@@ -1,115 +1,231 @@
-import React from 'react';
-import { ChevronDownIcon, MicrophoneIcon, PaperAirplaneIcon, PlusIcon, MagicBrainIcon } from './icons';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  ChevronDownIcon,
+  MicrophoneIcon,
+  PaperAirplaneIcon,
+  PlusIcon,
+  MagicBrainIcon,
+} from './icons';
+
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}
 
 const AIAssistant: React.FC = () => {
-    const suggestionChips = [
-        'Tax deadlines this quarter',
-        'Communication gaps analysis',
-        'Rebalancing opportunities',
-        'Onboarding report',
-        'Advisor performance reviews',
-    ];
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'welcome',
+      role: 'assistant',
+      content: `Hello! I'm Ava, your Knowledge Agent.
 
-    return (
-        <div className="flex flex-col h-full bg-white rounded-t-xl shadow-lg mx-8 mb-4">
-             <style>{`
-                .custom-scrollbar::-webkit-scrollbar { width: 8px; }
-                .custom-scrollbar::-webkit-scrollbar-track { background: #f8f9fa; border-radius: 10px; }
-                .custom-scrollbar::-webkit-scrollbar-thumb { background: #e9ecef; border-radius: 10px; }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #dee2e6; }
-            `}</style>
+I can help you with comprehensive client queries, communication history analysis, AUM and portfolio insights, and relationship intelligence.
 
-            {/* Header */}
-            <div className="flex-shrink-0 flex justify-between items-center p-4 border-b border-gray-200">
-                <div className="flex items-center space-x-4">
-                    <h2 className="text-xl font-bold text-black">AI Assistant</h2>
-                    <div className="relative">
-                        <button className="flex items-center space-x-2 bg-purple-100 text-brand-purple font-semibold px-4 py-2 rounded-lg text-sm hover:bg-purple-200 transition-colors">
-                            <span>Ava - Knowledge Agent</span>
-                            <ChevronDownIcon className="w-5 h-5" />
-                        </button>
-                    </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                    <div className="flex items-center space-x-2">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        <span className="text-sm font-medium text-green-700">Online</span>
-                    </div>
-                    <button className="flex items-center bg-brand-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
-                        <PlusIcon className="w-5 h-5 mr-2" />
-                        New Chat
-                    </button>
-                </div>
-            </div>
+**What I can do:**
+- Analyze client portfolios and investment patterns
+- Generate comprehensive client reports
+- Track communication history and engagement
+- Identify opportunities and risks across your book
+- Synthesize data from multiple platforms
 
-            {/* Chat Area */}
-            <div className="flex-1 flex flex-col overflow-y-auto custom-scrollbar">
-                {/* Welcome Message */}
-                <div className="p-8">
-                    <div className="flex items-start space-x-4">
-                        <div className="w-10 h-10 rounded-full bg-purple-500 text-white flex-shrink-0 flex items-center justify-center font-bold text-lg">
-                            A
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-lg rounded-tl-none shadow-sm border border-gray-100 max-w-3xl">
-                            <h3 className="font-bold text-lg text-black mb-2">Hello! I'm Ava, your Knowledge Agent.</h3>
-                            <p className="text-black mb-4">
-                                I can help you with comprehensive client queries, communication history analysis, AUM and portfolio insights, and relationship intelligence. I have access to all your connected systems including HubSpot, Addepar, Black Diamond, and Salesforce.
-                            </p>
-                            <div className="text-black font-semibold mb-2">What I can do:</div>
-                            <ul className="list-disc list-inside space-y-1 text-black">
-                                <li>Analyze client portfolios and investment patterns</li>
-                                <li>Generate comprehensive client reports</li>
-                                <li>Track communication history and engagement</li>
-                                <li>Identify opportunities and risks across your book</li>
-                                <li>Synthesize data from multiple platforms</li>
-                            </ul>
-                            <p className="mt-4 font-medium text-black">What would you like to know?</p>
-                        </div>
-                    </div>
-                </div>
+What would you like to know?`,
+      timestamp: new Date(),
+    },
+  ]);
 
-                 {/* Spacer to push content up */}
-                <div className="flex-grow"></div>
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedAgent] = useState('Ava - Knowledge Agent');
 
-                {/* Suggestion Chips */}
-                <div className="px-8 pb-4">
-                    <p className="text-sm text-black mb-3">Try asking:</p>
-                    <div className="flex flex-wrap gap-3">
-                        {suggestionChips.map(chip => (
-                            <button key={chip} className="px-4 py-2 bg-gray-100 text-black rounded-full text-sm hover:bg-gray-200 transition-colors">
-                                {chip}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </div>
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-            {/* Input Area */}
-            <div className="flex-shrink-0 p-4 bg-white border-t border-gray-200">
-                <div className="relative">
-                    <input
-                        type="text"
-                        placeholder="Ask me anything about your clients, portfolios, or operations..."
-                        className="w-full pl-4 pr-32 py-3 border border-gray-300 rounded-lg text-sm focus:ring-brand-blue focus:border-brand-blue"
-                    />
-                    <div className="absolute inset-y-0 right-3 flex items-center space-x-2">
-                        <button className="text-black hover:text-black">
-                            <MicrophoneIcon className="w-5 h-5" />
-                        </button>
-                        <button className="bg-brand-blue w-9 h-9 flex items-center justify-center rounded-lg hover:bg-blue-700 transition-colors">
-                            <PaperAirplaneIcon className="w-5 h-5 text-white -rotate-45" />
-                        </button>
-                         <button className="bg-purple-600 w-9 h-9 flex items-center justify-center rounded-lg hover:bg-purple-700 transition-colors">
-                            <MagicBrainIcon className="w-5 h-5 text-white" />
-                        </button>
-                    </div>
-                </div>
-            </div>
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading]);
+
+  /* ---------------- MOCK RESPONSE LAYER ---------------- */
+
+  const getMockResponse = (query: string): string => {
+    if (query.toLowerCase().includes('tax')) {
+      return `**Tax Deadlines Overview**
+
+- Estimated tax payments: April 15
+- Portfolio tax-loss harvesting review
+- Client capital gains assessment
+
+Would you like a client-wise tax impact summary?`;
+    }
+
+    if (query.toLowerCase().includes('rebalance')) {
+      return `**Rebalancing Opportunities Identified**
+
+- Equity allocation slightly above target
+- Fixed income underweighted
+- Suggest gradual rebalancing over next quarter
+
+Shall I prepare a model allocation report?`;
+    }
+
+    if (query.toLowerCase().includes('communication')) {
+      return `**Communication Gap Analysis**
+
+- 12 clients with no interaction in last 90 days
+- 4 high-AUM clients overdue for review
+- Opportunity for proactive outreach
+
+Would you like me to prioritize these clients?`;
+    }
+
+    return `Thanks for your question.
+
+In a live environment, I would analyze connected systems like CRM, portfolio tools, and communication logs to provide a precise answer.
+
+Would you like a summarized report or a deeper breakdown?`;
+  };
+
+  /* ---------------- MESSAGE SEND ---------------- */
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: input,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
+    inputRef.current?.focus();
+
+    // Simulated assistant delay
+    setTimeout(() => {
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: getMockResponse(userMessage.content),
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+      setIsLoading(false);
+    }, 900);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const suggestionChips = [
+    'Tax deadlines this quarter',
+    'Communication gaps analysis',
+    'Rebalancing opportunities',
+    'Onboarding report',
+    'Advisor performance reviews',
+  ];
+
+  return (
+    <div className="flex flex-col h-full bg-white rounded-t-xl shadow-lg mx-8 mb-4">
+      {/* Header */}
+      <div className="flex justify-between items-center p-4 border-b bg-gradient-to-r from-purple-50 to-blue-50">
+        <div className="flex items-center space-x-4">
+          <h2 className="text-xl font-bold">AI Assistant</h2>
+          <button className="flex items-center bg-purple-100 px-4 py-2 rounded-lg">
+            {selectedAgent}
+            <ChevronDownIcon className="w-5 h-5 ml-2" />
+          </button>
         </div>
-    );
+
+        <button
+          onClick={() => setMessages([messages[0]])}
+          className="flex items-center bg-brand-blue text-white px-4 py-2 rounded-lg"
+        >
+          <PlusIcon className="w-5 h-5 mr-2" />
+          New Chat
+        </button>
+      </div>
+
+      {/* Chat */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-2xl p-4 rounded-2xl shadow ${
+                m.role === 'user'
+                  ? 'bg-brand-blue text-white'
+                  : 'bg-gray-50 border'
+              }`}
+              dangerouslySetInnerHTML={{
+                __html: m.content.replace(/\n/g, '<br />'),
+              }}
+            />
+          </div>
+        ))}
+
+        {isLoading && (
+          <div className="text-sm text-gray-500">Ava is typing…</div>
+        )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Suggestions */}
+      {messages.length === 1 && (
+        <div className="p-4 border-t bg-gray-50 flex flex-wrap gap-2">
+          {suggestionChips.map((chip) => (
+            <button
+              key={chip}
+              onClick={() => {
+                setInput(chip);
+                setTimeout(handleSend, 300);
+              }}
+              className="px-4 py-2 bg-white border rounded-full text-sm"
+            >
+              {chip}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Input */}
+      <div className="p-4 border-t">
+        <div className="relative">
+          <input
+            ref={inputRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Ask me anything..."
+            className="w-full pl-4 pr-32 py-3 border rounded-lg"
+          />
+
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
+            <button>
+              <MicrophoneIcon className="w-5 h-5" />
+            </button>
+            <button onClick={handleSend}>
+              <PaperAirplaneIcon className="w-5 h-5 -rotate-45" />
+            </button>
+            <button>
+              <MagicBrainIcon className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AIAssistant;
