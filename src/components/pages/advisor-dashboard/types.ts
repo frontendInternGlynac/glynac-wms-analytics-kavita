@@ -6,7 +6,7 @@ export interface PortfolioSummaryMetric {
   value: string | number;
   change: string;
   changeType: ChangeType;
-  iconName: string; // maps to icons wrapper
+  icon: React.ComponentType<React.ComponentProps<'svg'>>; // maps to icons
   iconBgColor: string; // tailwind bg class
 }
 
@@ -36,6 +36,7 @@ export interface PerformanceInsight {
   title: string;
   value: number; // percentage 0-100
   valueDisplay: string; // e.g., '73%'
+  bgColor : string;
 }
 
 export interface ClientOpportunity {
@@ -45,6 +46,7 @@ export interface ClientOpportunity {
   color: string;
   level?: string; // e.g., 'HIGH PRIORITY'
   count?: number; // numeric count if no level
+  value : string | number; 
 }
 
 export interface PriorityAction {

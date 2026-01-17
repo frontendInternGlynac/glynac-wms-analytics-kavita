@@ -1,10 +1,20 @@
+import {
+  UserGroupIcon,
+  CurrencyDollarIcon,
+  ChartBarIcon,
+  StarIcon,
+  ChevronDownIcon,
+  BrainIcon,
+  ClockIcon,
+} from './icons';
+
 import { AdvisorActionItem, AdvisorDashboardClient, ClientOpportunity, PerformanceInsight, PortfolioSummaryMetric, PriorityAction } from './types';
 
 export const ADVISOR_PORTFOLIO_SUMMARY: PortfolioSummaryMetric[] = [
-  { id: 'clients', title: 'My Clients', value: 73, change: '+3 this month', changeType: 'increase', iconName: 'UserGroupIcon', iconBgColor: 'bg-blue-100' },
-  { id: 'aum', title: 'My AUM', value: '$127M', change: '+12% this quarter', changeType: 'increase', iconName: 'CurrencyDollarIcon', iconBgColor: 'bg-green-100' },
-  { id: 'revenue', title: 'Revenue', value: '$847K', change: '+15% year to year', changeType: 'increase', iconName: 'ChartBarIcon', iconBgColor: 'bg-purple-100' },
-  { id: 'satisfaction', title: 'Satisfaction', value: '4.6/5.0', change: 'Excellent rating', changeType: 'increase', iconName: 'StarIcon', iconBgColor: 'bg-yellow-100' }
+  { id: 'clients', title: 'My Clients', value: 73, change: '+3 this month', changeType: 'increase', icon: UserGroupIcon, iconBgColor: 'bg-blue-100' },
+  { id: 'aum', title: 'My AUM', value: '$127M', change: '+12% this quarter', changeType: 'increase', icon: CurrencyDollarIcon, iconBgColor: 'bg-green-100' },
+  { id: 'revenue', title: 'Revenue', value: '$847K', change: '+15% year to year', changeType: 'increase', icon: ChartBarIcon, iconBgColor: 'bg-purple-100' },
+  { id: 'satisfaction', title: 'Satisfaction', value: '4.6/5.0', change: 'Excellent rating', changeType: 'increase', icon: StarIcon, iconBgColor: 'bg-yellow-100' }
 ];
 
 export const ADVISOR_ACTION_ITEMS: AdvisorActionItem[] = [
@@ -21,18 +31,18 @@ export const ADVISOR_DASHBOARD_CLIENTS: AdvisorDashboardClient[] = [
 ];
 
 export const ADVISOR_PERFORMANCE_INSIGHTS: PerformanceInsight[] = [
-  { id: 'contact-rate', title: 'Client Contact Rate', value: 86, valueDisplay: '86%' },
-  { id: 'call-meeting', title: 'Call-to-Meeting Rate', value: 73, valueDisplay: '73%' },
-  { id: 'avg-task', title: 'Avg Task Completion Time', value: 3.7, valueDisplay: '3.7 days' },
-  { id: 'engagement', title: 'Client Engagement Score', value: 8.4, valueDisplay: '8.4/10' }
+  { id: 'contact-rate', title: 'Client Contact Rate', value: 86, valueDisplay: '86%' ,  bgColor: 'bg-yellow-100'},
+  { id: 'call-meeting', title: 'Call-to-Meeting Rate', value: 73, valueDisplay: '73%', bgColor:'bg-blue-100' },
+  { id: 'avg-task', title: 'Avg Task Completion Time', value: 3.7, valueDisplay: '3.7 days',bgColor:'bg-purple-100' },
+  { id: 'engagement', title: 'Client Engagement Score', value: 8.4, valueDisplay: '8.4/10' , bgColor:'bg-green-100' }
 ];
 
 export const ADVISOR_CLIENT_OPPORTUNITIES: ClientOpportunity[] = [
-  { id: 'high-risk', title: 'High-Risk Clients', subtitle: 'Requires attention due to risk shifts', color: 'border-red-500', level: 'HIGH PRIORITY' },
-  { id: 'aum-concentration', title: 'AUM Concentration', subtitle: 'Exposure to a few large accounts', color: 'border-yellow-500', count: 5 },
-  { id: 'compliance-docs', title: 'Compliance Docs', subtitle: 'Missing or outdated KYC', color: 'border-orange-500', count: 7 },
-  { id: 'growth-opps', title: 'Growth Opportunities', subtitle: 'Prospective upsell and cross-sell', color: 'border-green-500', count: 4 },
-  { id: 'discounts', title: 'Discounts Detected', subtitle: 'Pricing flags and fee review', color: 'border-blue-500', count: 6 }
+  { id: 'high-risk', title: 'High-Risk Clients', subtitle: 'Requires attention due to risk shifts', color: 'border-red-500', level: 'HIGH PRIORITY' , value : 'RISK' },
+  { id: 'aum-concentration', title: 'AUM Concentration', subtitle: 'Exposure to a few large accounts', color: 'border-yellow-500', value: 5  },
+  { id: 'compliance-docs', title: 'Compliance Docs', subtitle: 'Missing or outdated KYC', color: 'border-orange-500', value: 7 },
+  { id: 'growth-opps', title: 'Growth Opportunities', subtitle: 'Prospective upsell and cross-sell', color: 'border-green-500', value: 4 },
+  { id: 'discounts', title: 'Discounts Detected', subtitle: 'Pricing flags and fee review', color: 'border-blue-500', value: 6 }
 ];
 
 export const ADVISOR_PRIORITY_ACTIONS: PriorityAction[] = [
