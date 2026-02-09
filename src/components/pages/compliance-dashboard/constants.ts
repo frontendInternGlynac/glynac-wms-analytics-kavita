@@ -38,8 +38,8 @@ export const RISK_MONITOR: MetricTile[] = [
 ];
 
 export const UPCOMING_REQUIREMENTS: TimelineItem[] = [
-  { id: 'adv-update', title: 'Form ADV Update Due', dueLabel: 'DUE IN 3 DAYS', badgeClass: 'bg-red-600 text_white', actionLabel: 'Review Now' },
-  { id: 'aml-training', title: 'AML Training Certification', dueLabel: 'DUE IN 2 WEEKS', badgeClass: 'bg-yellow-500 text-white', actionLabel: 'Schedule Training' },
-  { id: 'risk-assess', title: 'Client Risk Assessments', dueLabel: 'DUE IN 1 MONTH', badgeClass: 'bg-blue-600 text_white', actionLabel: 'Start Reviews' },
-  { id: 'cyber', title: 'Cybersecurity Assessment', dueLabel: 'ON TRACK', badgeClass: 'bg-green-600 text_white', actionLabel: 'View Status' }
+  { id: 'adv-update', title: 'Form ADV Update Due', dueLabel: 'DUE IN 3 DAYS', badgeClass: 'bg-red-600 text_white', actionLabel: 'Review Now' , desc : "desc"},
+  { id: 'aml-training', title: 'AML Training Certification', dueLabel: 'DUE IN 2 WEEKS', badgeClass: 'bg-yellow-500 text-white', actionLabel: 'Schedule Training',  desc : "desc" },
+  { id: 'risk-assess', title: 'Client Risk Assessments', dueLabel: 'DUE IN 1 MONTH', badgeClass: 'bg-blue-600 text_white', actionLabel: 'Start Reviews', desc : "desc" },
+  { id: 'cyber', title: 'Cybersecurity Assessment', dueLabel: 'ON TRACK', badgeClass: 'bg-green-600 text_white', actionLabel: 'View Status' , desc : "desc"}
 ];

@@ -1,4 +1,4 @@
-import { BarChart3, Clock, CheckCircle, FileText, AlertTriangle, Brain } from 'lucide-react';
+import { BarChart3, Clock, CheckCircle, FileText, AlertTriangle, Brain, ChevronDown } from 'lucide-react';
 import React from 'react';
 
 export const ChartBarIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -23,4 +23,8 @@ export const ExclamationTriangleIcon: React.FC<{ className?: string }> = ({ clas
 
 export const BrainIcon: React.FC<{ className?: string }> = ({ className }) => (
   <Brain className={className} />
+);
+
+export const ChevronDownIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <ChevronDown className={className} />
 );
