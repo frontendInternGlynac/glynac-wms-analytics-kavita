@@ -110,6 +110,7 @@ export const OPERATIONS_ADVISOR_CAPACITY: AdvisorCapacity = {
   underUtilized: 5,
   firmAverage: 76,
   totalAdvisors: 47,
+  id: 1,
 };
 
 export const OPERATIONS_TASK_DISTRIBUTION: TaskDistributionMetric[] = [

@@ -81,4 +81,5 @@ export interface AdvisorCapacity {
   underUtilized: number;
   firmAverage: number; // percentage
   totalAdvisors: number;
+  id: number | string;
 }

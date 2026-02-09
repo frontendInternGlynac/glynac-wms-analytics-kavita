@@ -369,7 +369,7 @@ export default function OperationsDashboard() {
   const renderBottleneck = (bottle: WorkflowBottleneck) => {
     const colors = PRIORITY_COLORS[bottle.level];
     return (
-      <div className={`p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border-l-4 ${bottle.color} shadow-md hover:shadow-lg transition-all duration-300`}>
+      <div key={bottle.id} className={`p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border-l-4 ${bottle.color} shadow-md hover:shadow-lg transition-all duration-300`}>
         <div className="flex justify-between items-start mb-2">
           <div className="font-semibold text-gray-900 text-sm sm:text-base">{bottle.title}</div>
           <span className={`px-2 py-1 rounded-full text-xs font-bold ${colors.bg} ${colors.text}`}>
@@ -388,7 +388,7 @@ export default function OperationsDashboard() {
   };
 
   const renderSummaryItem = (item: OperationsSummaryItem) => (
-    <div className="text-center p-4 sm:p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+    <div key={item.id} className="text-center p-4 sm:p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
       <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{item.value}</div>
       <div className="text-sm text-gray-600">{item.title}</div>
       <div className="text-xs text-gray-500 mt-1">{item.subtitle}</div>
@@ -402,7 +402,7 @@ export default function OperationsDashboard() {
   );
 
   const renderCompletionRate = (dept: DepartmentCompletionRate) => (
-    <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300">
+    <div key={dept.id} className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300">
       <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{dept.rate}%</div>
       <ProgressBar value={dept.rate} colorClass={dept.color} />
       <div className="text-sm text-gray-600 font-semibold mt-3">{dept.department}</div>
@@ -416,7 +416,7 @@ export default function OperationsDashboard() {
   );
 
   const renderQualityIssue = (issue: DataQualityIssue) => (
-    <div className={`p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border-l-4 ${issue.color} shadow-md hover:shadow-lg transition-all duration-300`}>
+    <div key={issue.id} className={`p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border-l-4 ${issue.color} shadow-md hover:shadow-lg transition-all duration-300`}>
       <div className="font-semibold text-gray-900 text-sm sm:text-base mb-2">{issue.title}</div>
       <div className="text-xs sm:text-sm text-gray-600 mb-3">{issue.subtitle}</div>
       <span className="inline-block px-3 py-1 rounded-full text-base font-bold bg-white text-gray-900 shadow-sm">{issue.value}</span>
@@ -430,7 +430,7 @@ export default function OperationsDashboard() {
   );
 
   const renderConsistencyScore = (score: DataConsistencyScore) => (
-    <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300">
+    <div key={score.id} className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300">
       <div className="flex justify-between items-center mb-3">
         <span className="font-semibold text-gray-900 text-sm sm:text-base">{score.name}</span>
         <span className="text-lg font-bold text-green-700">{score.score}%</span>
@@ -446,7 +446,7 @@ export default function OperationsDashboard() {
   );
 
   const renderAdvisorCapacity = (capacity: AdvisorCapacity) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div key={capacity.id} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <div className="text-center p-6 bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl border border-red-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
         <div className="text-3xl font-bold text-red-700 mb-2">{capacity.overloaded}</div>
         <div className="text-sm text-gray-600">Overloaded Advisors</div>
@@ -500,14 +500,14 @@ export default function OperationsDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 sm:p-6 lg:p-8 font-sans text-gray-800">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <header className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
           <div className="mb-6 lg:mb-0">
-            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black bg-gradient-to-r from-gray-900 via-indigo-900 to-purple-900 bg-clip-text text-transparent">Operations Dashboard</h1>
+            <h1 className="text-3xl lg:text-4xl xl:text-4xl font-black ">Operations Dashboard</h1>
             <p className="text-gray-600 mt-3 text-sm lg:text-base max-w-3xl">Monitor your firm's operational efficiency, data quality, and resource utilization</p>
           </div>
           <button 
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-2xl hover:from-blue-600 hover:to-indigo-700 font-bold flex items-center gap-2 shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 w-full lg:w-auto justify-center"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-2xl hover:from-blue-600 hover:to-indigo-700 font-bold flex items-center gap-2  transition-all duration-300 transform hover:scale-105 active:scale-95 w-full lg:w-auto justify-center"
             onClick={() => handleAction('Chat with AI', 'Eva')}
           >
             Chat with AI
@@ -517,7 +517,7 @@ export default function OperationsDashboard() {
       </header>
 
       {/* Process Efficiency Metrics */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Process Efficiency Metrics</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {OPERATIONS_PROCESS_METRICS.map(renderMetricTile)}
@@ -527,7 +527,7 @@ export default function OperationsDashboard() {
       {/* Workflow Bottlenecks & Today's Operations Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Workflow Bottlenecks */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Workflow Bottlenecks</h3>
           <div className="space-y-4">
             {OPERATIONS_WORKFLOW_BOTTLENECKS.map(renderBottleneck)}
@@ -535,7 +535,7 @@ export default function OperationsDashboard() {
         </section>
 
         {/* Today's Operations Summary */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl border border-white/60 p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Today's Operations Summary</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {OPERATIONS_SUMMARY_ITEMS.map(renderSummaryItem)}
@@ -544,7 +544,7 @@ export default function OperationsDashboard() {
       </div>
 
       {/* Task Completion Rates */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Task Completion Rates by Department</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {OPERATIONS_DEPARTMENT_COMPLETION.map(renderCompletionRate)}
@@ -552,7 +552,7 @@ export default function OperationsDashboard() {
       </section>
 
       {/* Data Quality Management */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Data Quality Management</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-4">
@@ -567,7 +567,7 @@ export default function OperationsDashboard() {
       </section>
 
       {/* Resource Utilization Analysis */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Resource Utilization Analysis</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
@@ -587,7 +587,7 @@ export default function OperationsDashboard() {
       </section>
 
       {/* Quality Assurance Monitoring */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Quality Assurance Monitoring</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-4">

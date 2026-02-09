@@ -1,279 +1,332 @@
-import React, { useMemo, useState } from 'react';
+
+'use client';
+
+import React, { useState } from 'react';
 import {
   ADVISOR_PORTFOLIO_SUMMARY,
   ADVISOR_ACTION_ITEMS,
   ADVISOR_DASHBOARD_CLIENTS,
   ADVISOR_PERFORMANCE_INSIGHTS,
   ADVISOR_CLIENT_OPPORTUNITIES,
-  ADVISOR_PRIORITY_ACTIONS,
+  ADVISOR_PRIORITY_ACTIONS
 } from './constants';
 import {
+  PortfolioSummaryMetric,
+  AdvisorActionItem,
+  AdvisorDashboardClient,
+  PerformanceInsight,
+  ClientOpportunity,
+  PriorityAction
+} from './types';
+import {
+  UserGroupIcon,
+  CurrencyDollarIcon,
+  ChartBarIcon,
   StarIcon,
   ChevronDownIcon,
+  BrainIcon,
+  ClockIcon
 } from './icons';
+//import ProgressBar from './ProgressBar';
 
-// =========================
-// Advisor Dashboard Page
-// =========================
 export default function AdvisorDashboard() {
-  const [clientFilter, setClientFilter] = useState<'all' | 'positive' | 'risk'>('all');
+  const [selectedClient, setSelectedClient] = useState<AdvisorDashboardClient | null>(null);
 
-  const filteredClients = useMemo(() => {
-    if (clientFilter === 'risk') return ADVISOR_DASHBOARD_CLIENTS.filter(c => c.healthScore < 7);
-    if (clientFilter === 'positive') return ADVISOR_DASHBOARD_CLIENTS.filter(c => c.healthScore >= 7);
-    return ADVISOR_DASHBOARD_CLIENTS;
-  }, [clientFilter]);
+  const handleAction = (action: string, itemId: string) => {
+    console.log(`Performed ${action} on ${itemId}`);
+    alert(`Action "${action}" performed on ${itemId}`);
+  };
 
-  return (
-    <div className="p-4 md:p-8 space-y-10">
-
-      {/* Header */}
-      <header>
-        <h1 className="text-3xl font-bold">My Portfolio Dashboard</h1>
-        <p className="text-neutral-500">Your clients, performance metrics, and daily action items</p>
-      </header>
-
-      {/* Portfolio Summary */}
-      <section>
-        <h2 className="text-lg font-bold mb-4">My Portfolio Summary</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-          {ADVISOR_PORTFOLIO_SUMMARY.map(metric => (
-            <div key={metric.id} className="flex items-center gap-4 p-5 rounded-xl border bg-white hover:shadow">
-              <div className={`p-3 rounded-lg ${metric.iconBgColor}`}>
-                <metric.icon className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-sm text-neutral-500">{metric.title}</p>
-                <p className="text-2xl font-bold">{metric.value}</p>
-                <p className="text-green-600 text-sm">{metric.change}</p>
-              </div>
-            </div>
-          ))}
+  const renderMetricTile = (metric: PortfolioSummaryMetric) => {
+    const Icon = metric.icon;
+    return (
+      <div key={metric.id} className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300 transform hover:scale-105">
+        <div className={`${metric.iconBgColor} inline-flex p-2 rounded-full mb-2`}>
+          <Icon className="h-5 w-5 text-gray-700" />
         </div>
-      </section>
+        <div className="text-2xl font-bold text-gray-900">{metric.value}</div>
+        <div className="text-sm text-gray-600">{metric.title}</div>
+        <div className={`text-xs ${metric.changeType === 'increase' ? 'text-green-600' : 'text-red-600'}`}>{metric.change}</div>
+        <button 
+          className="mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+          onClick={() => handleAction('View Details', metric.id)}
+        >
+          View
+        </button>
+      </div>
+    );
+  };
 
-      {/* Action Items */}
-      <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="border rounded-xl p-5">
-          <h3 className="font-bold flex items-center gap-2 mb-4">
-            <StarIcon className="w-5 h-5" /> Action Items Today
-          </h3>
-          <div className="space-y-3">
-            {ADVISOR_ACTION_ITEMS.map(item => (
-              <div
-                key={item.id}
-                className={`border-l-4 ${item.color} p-4 rounded-lg border hover:bg-neutral-50`}
-              >
-                <div className="flex justify-between font-semibold">
-                  <span>{item.title}</span>
-                  <span>{item.count}</span>
-                </div>
-                <p className="text-sm text-neutral-500">{item.subtitle}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Communication Hub */}
-        <div className="border rounded-xl p-5">
-          <h3 className="font-bold mb-4">Communication Hub</h3>
-          <ul className="space-y-3 text-sm">
-            <li className="flex justify-between"><span>Avg Response Time</span><span className="text-green-600">2.3 hours</span></li>
-            <li className="flex justify-between"><span>Meetings This Week</span><span>18</span></li>
-            <li className="flex justify-between"><span>Outstanding Tasks</span><span className="text-red-600">6</span></li>
-            <li className="flex justify-between"><span>Email Engagement</span><span className="text-green-600">87%</span></li>
-          </ul>
-          <div className="mt-5 space-y-2">
-            <ActionButton label="Compose client update" />
-            <ActionButton label="Schedule follow-ups" />
-            <ActionButton label="View communication reports" />
-          </div>
-        </div>
-      </section>
-
-      {/* Clients */}
-      <section className="border rounded-xl p-5">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold">My Clients</h3>
-          <select
-            value={clientFilter}
-            onChange={e => setClientFilter(e.target.value as any)}
-            className="border rounded-md px-2 py-1 text-sm"
-          >
-            <option value="all">All Clients</option>
-            <option value="positive">Healthy Clients</option>
-            <option value="risk">At Risk</option>
-          </select>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="text-neutral-500">
-              <tr>
-                <th className="text-left py-2">Client</th>
-                <th>AUM</th>
-                <th>Last Contact</th>
-                <th>Health</th>
-                <th>Next Meeting</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredClients.map(client => (
-                <tr key={client.id} className="border-t">
-                  <td className="py-3 font-medium">{client.name}</td>
-                  <td>${(client.aum / 1_000_000).toFixed(1)}M</td>
-                  <td>{client.lastContact}</td>
-                  <td>
-                    <span className={`px-2 py-1 rounded text-xs ${client.healthScore >= 7 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                      {client.healthScore}
-                    </span>
-                  </td>
-                  <td>{client.nextMeeting}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Performance & Communication Analytics */}
-      <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="border rounded-xl p-5">
-          <h3 className="font-bold mb-4">My Performance Insights</h3>
-          <div className="space-y-3">
-            {ADVISOR_PERFORMANCE_INSIGHTS.map(insight => (
-              <div key={insight.id} className={`p-4 rounded-lg ${insight.bgColor}`}>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-semibold">{insight.title}</p>
-                   {/*    <p className="text-sm text-neutral-500">{insight.subtitle}</p> */}
-                  </div>
-                  <span className="text-xl font-bold">{insight.value}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border rounded-xl p-5">
-          <h3 className="font-bold mb-4">Communication Analytics</h3>
-          <div className="space-y-4">
-            <div>
-              <p className="font-semibold mb-2">Email Open Rate by Client Segment</p>
-              <ul className="text-sm space-y-1">
-                <li className="flex justify-between"><span>High Net Worth</span><span className="text-green-600">94%</span></li>
-                <li className="flex justify-between"><span>Mass Affluent</span><span className="text-blue-600">78%</span></li>
-                <li className="flex justify-between"><span>Emerging Wealth</span><span className="text-orange-600">65%</span></li>
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-semibold mb-2">Response Time by Communication Method</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="border rounded-lg p-3 text-center">
-                  <p className="text-xl font-bold text-green-600">2.3h</p>
-                  <p className="text-sm text-neutral-500">Email</p>
-                </div>
-                <div className="border rounded-lg p-3 text-center">
-                  <p className="text-xl font-bold text-blue-600">0.8h</p>
-                  <p className="text-sm text-neutral-500">Phone</p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <p className="font-semibold mb-2">Client Channel Preferences</p>
-              <ul className="text-sm space-y-1">
-                <li className="flex justify-between"><span>Email</span><span>45%</span></li>
-                <li className="flex justify-between"><span>Phone</span><span>32%</span></li>
-                <li className="flex justify-between"><span>In-Person</span><span>23%</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Client Opportunities & Alerts */}
-      <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="border rounded-xl p-5">
-          <h3 className="font-bold mb-4">Client Opportunities & Alerts</h3>
-          <div className="space-y-3">
-            {ADVISOR_CLIENT_OPPORTUNITIES.map(item => (
-              <div
-                key={item.id}
-                className={`border-l-4 ${item.color} p-4 rounded-lg bg-white hover:shadow`}
-              >
-                <div className="flex justify-between font-semibold">
-                  <span>{item.title}</span>
-                  <span>{item.value}</span>
-                </div>
-                <p className="text-sm text-neutral-500">{item.subtitle}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border rounded-xl p-5">
-          <h3 className="font-bold mb-4">Communication Hub</h3>
-          <ul className="space-y-3 text-sm">
-            <li className="flex justify-between"><span>Avg Response Time</span><span className="text-green-600">2.3 hours</span></li>
-            <li className="flex justify-between"><span>Meetings This Week</span><span>18</span></li>
-            <li className="flex justify-between"><span>Outstanding Tasks</span><span className="text-red-600">6</span></li>
-            <li className="flex justify-between"><span>Email Engagement</span><span className="text-green-600">87%</span></li>
-          </ul>
-          <div className="mt-5 space-y-2">
-            <ActionButton label="Compose client update" />
-            <ActionButton label="Schedule follow-ups" />
-            <ActionButton label="View communication reports" />
-          </div>
-        </div>
-      </section>
-
-      {/* Priority Actions */}
-      <section className="border rounded-xl p-5">
-        <h3 className="font-bold mb-4">Today's Priority Actions</h3>
-        <div className="space-y-3">
-          {ADVISOR_PRIORITY_ACTIONS.map(action => (
-            <div key={action.id} className="flex flex-col md:flex-row justify-between gap-4 border p-4 rounded-lg">
-              <div className="flex gap-3">
-                <span className={`w-3 h-3 rounded-full mt-2 ${action.dotColor}`} />
-                <div>
-                  <p className="font-semibold">{action.title}</p>
-                  <p className="text-sm text-neutral-500">{action.subtitle}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className={`text-xs font-semibold ${action.priorityColor}`}>{action.priority}</span>
-                <button
-                  onClick={() => alert(`${action.buttonText}: ${action.title}`)}
-                  className={`px-4 py-2 text-white rounded ${action.buttonColor}`}
-                >
-                  {action.buttonText}
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <footer className="text-sm text-neutral-400 flex justify-between">
-        <span>Dashboard last updated: Today at 2:47 PM</span>
-        <span>Next refresh in 13 minutes</span>
-      </footer>
+  const renderActionItem = (item: AdvisorActionItem) => (
+    <div key={item.id} className="bg-gray-50 p-4 rounded-md border-l-4 border-orange-500 hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 flex justify-between items-center shadow-sm">
+      <div>
+        <div className="font-medium text-gray-900">{item.title}</div>
+        <div className="text-sm text-gray-500">{item.subtitle}</div>
+      </div>
+      <span className="text-xl font-bold text-orange-700">{item.count}</span>
+      <button 
+        className="ml-4 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+        onClick={() => handleAction('Resolve', item.id)}
+      >
+        Resolve
+      </button>
     </div>
   );
-}
 
-// =========================
-// Small Reusable Button
-// =========================
-function ActionButton({ label }: { label: string }) {
+  const renderCommunicationHub = () => (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center bg-blue-50 p-4 rounded-md shadow-sm">
+        <span className="font-medium text-gray-900">Avg Response Time</span>
+        <span className="text-xl font-bold text-blue-700">2.3 hours</span>
+      </div>
+      <div className="flex justify-between items-center bg-green-50 p-4 rounded-md shadow-sm">
+        <span className="font-medium text-gray-900">Meetings This Week</span>
+        <span className="text-xl font-bold text-green-700">18</span>
+      </div>
+      <div className="flex justify-between items-center bg-red-50 p-4 rounded-md shadow-sm">
+        <span className="font-medium text-gray-900">Outstanding Tasks</span>
+        <span className="text-xl font-bold text-red-700">6</span>
+      </div>
+      <div className="flex justify-between items-center bg-purple-50 p-4 rounded-md shadow-sm">
+        <span className="font-medium text-gray-900">Email Engagement</span>
+        <span className="text-xl font-bold text-purple-700">87%</span>
+      </div>
+      <button 
+        className="w-full bg-white border border-gray-300 p-4 rounded-md text-left hover:bg-gray-50 transition-all duration-200 shadow-sm transform hover:scale-105"
+        onClick={() => handleAction('Compose', 'client-update')}
+      >
+        Compose client update
+      </button>
+      <button 
+        className="w-full bg-white border border-gray-300 p-4 rounded-md text-left hover:bg-gray-50 transition-all duration-200 shadow-sm transform hover:scale-105"
+        onClick={() => handleAction('Schedule', 'follow-ups')}
+      >
+        Schedule follow-ups
+      </button>
+      <button 
+        className="w-full bg-white border border-gray-300 p-4 rounded-md text-left hover:bg-gray-50 transition-all duration-200 shadow-sm transform hover:scale-105"
+        onClick={() => handleAction('View', 'communication-reports')}
+      >
+        View communication reports
+      </button>
+    </div>
+  );
+
+  const renderClientRow = (client: AdvisorDashboardClient) => (
+    <tr key={client.id} className="border-b border-gray-200 hover:bg-gray-50 transition-all duration-200 cursor-pointer" onClick={() => setSelectedClient(client)}>
+      <td className="px-4 py-3 flex items-center space-x-2">
+        <div className={`w-6 h-6 rounded-full ${client.avatarColor} flex items-center justify-center text-white text-xs font-bold`}>
+          {client.initials}
+        </div>
+        <div>
+          <div className="font-medium text-gray-900">{client.name}</div>
+          <div className="text-xs text-gray-500">{client.type}</div>
+        </div>
+      </td>
+      <td className="px-4 py-3 text-right">${(client.aum / 1000000).toFixed(1)}M</td>
+      <td className="px-4 py-3 text-right text-sm text-gray-500">{client.lastContact}</td>
+      <td className="px-4 py-3 text-right">
+        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${client.healthScore >= 8 ? 'bg-green-100 text-green-700' : client.healthScore >= 7 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>
+          {client.healthScore}
+        </span>
+      </td>
+      <td className="px-4 py-3 text-right text-sm text-gray-500">{client.nextMeeting}</td>
+      <td className="px-4 py-3 text-right">
+        <button 
+          className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAction('View', client.id);
+          }}
+        >
+          View
+        </button>
+      </td>
+    </tr>
+  );
+
+  const renderPerformanceInsight = (insight: PerformanceInsight) => (
+    <div key={insight.id} className={`p-4 rounded-md flex justify-between items-center ${insight.bgColor} hover:opacity-80 transition-opacity duration-200 shadow-sm`}>
+      <span className="text-sm font-medium text-gray-900">{insight.title}</span>
+      <span className="text-xl font-bold text-gray-900">{insight.valueDisplay}</span>
+      <button 
+        className="ml-4 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+        onClick={() => handleAction('View', insight.id)}
+      >
+        View
+      </button>
+    </div>
+  );
+
+  const renderClientOpportunity = (opp: ClientOpportunity) => (
+    <div key={opp.id} className="p-4 rounded-md border-l-4 border-red-500 hover:bg-gray-50 transition-all duration-200 flex justify-between items-center shadow-sm">
+      <div>
+        <div className="font-medium text-gray-900">{opp.title}</div>
+        <div className="text-sm text-gray-500">{opp.subtitle}</div>
+      </div>
+      <span className="text-xl font-bold text-red-700">{opp.value}</span>
+      <button 
+        className="ml-4 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+        onClick={() => handleAction('Resolve', opp.id)}
+      >
+        Resolve
+      </button>
+    </div>
+  );
+
+  const renderPriorityAction = (action: PriorityAction) => (
+    <div key={action.id} className="p-4 rounded-md bg-gray-50 flex justify-between items-center hover:bg-gray-100 transition-all duration-200 shadow-sm">
+      <div className="flex items-start space-x-2">
+        <div className={`w-3 h-3 rounded-full ${action.dotColor} mt-1`}></div>
+        <div>
+          <div className="font-medium text-gray-900">{action.title}</div>
+          <div className="text-sm text-gray-500">{action.subtitle}</div>
+        </div>
+      </div>
+      <span className={`text-sm font-medium ${action.priorityColor}`}>{action.priority}</span>
+      <button 
+        className={`ml-4 px-3 py-1 rounded-md text-sm font-medium text-white ${action.buttonColor} hover:opacity-80 transition-opacity duration-200`}
+        onClick={() => handleAction(action.buttonText, action.id)}
+      >
+        {action.buttonText}
+      </button>
+    </div>
+  );
+
   return (
-    <button
-      onClick={() => alert(label)}
-      className="w-full text-left border px-3 py-2 rounded hover:bg-neutral-100 text-sm"
-    >
-      {label}
-    </button>
+    <div className="min-h-screen bg-white text-black  bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 sm:p-6 lg:p-8 font-sans text-gray-800">
+      
+
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6">
+        <div className="mb-6 bg-white rounded-xl shadow-sm p-4">
+          <h2 className="text-4xl  font-black ">Advisor Dashboard</h2>
+          <p className="text-gray-500 mt-1">Your clients, performance metrics, and daily action items</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {ADVISOR_PORTFOLIO_SUMMARY.map(renderMetricTile)}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-lg font-bold mb-4">Action Items Today</h3>
+            <div className="space-y-4">
+              {ADVISOR_ACTION_ITEMS.map(renderActionItem)}
+            </div>
+          </section>
+
+          <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-lg font-bold mb-4">Communication Hub</h3>
+            {renderCommunicationHub()}
+          </section>
+        </div>
+
+        <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 mb-8">
+          <h3 className="text-lg font-bold mb-4 flex items-center justify-between">
+            My Clients
+            <select className="border rounded-md px-2 py-1 text-sm">
+              <option>All Clients</option>
+            </select>
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 text-sm">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                  <th className="px-4 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">AUM</th>
+                  <th className="px-4 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Last Contact</th>
+                  <th className="px-4 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Health</th>
+                  <th className="px-4 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Next Meeting</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {ADVISOR_DASHBOARD_CLIENTS.map(renderClientRow)}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-lg font-bold mb-4">My Performance Insights</h3>
+            <div className="space-y-4">
+              {ADVISOR_PERFORMANCE_INSIGHTS.map(renderPerformanceInsight)}
+            </div>
+          </section>
+
+          <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-lg font-bold mb-4">Communication Analytics</h3>
+            <div className="space-y-4">
+              <div className="p-4 bg-yellow-100 rounded-md flex justify-between items-center shadow-sm">
+                <span className="font-medium text-gray-900">Email Open Rate by Client Segment</span>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>High Net Worth</span>
+                    <span>94%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Emerging Wealth</span>
+                    <span>78%</span>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 bg-orange-100 rounded-md flex justify-between items-center shadow-sm">
+                <span className="font-medium text-gray-900">Response Time by Communication Method</span>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Email</span>
+                    <span>2.3h</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Phone</span>
+                    <span>0.8h</span>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 bg-purple-100 rounded-md flex justify-between items-center shadow-sm">
+                <span className="font-medium text-gray-900">Client Channel Preferences</span>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Email</span>
+                    <span>45%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Phone</span>
+                    <span>32%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>In-Person</span>
+                    <span>23%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 mb-8">
+          <h3 className="text-lg font-bold mb-4">Client Opportunities & Alerts</h3>
+          <div className="space-y-4">
+            {ADVISOR_CLIENT_OPPORTUNITIES.map(renderClientOpportunity)}
+          </div>
+        </section>
+
+        <section className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 mb-8">
+          <h3 className="text-lg font-bold mb-4">Today's Priority Actions</h3>
+          <div className="space-y-4">
+            {ADVISOR_PRIORITY_ACTIONS.map(renderPriorityAction)}
+          </div>
+        </section>
+
+        <footer className="text-center text-sm text-gray-500 p-4">
+          <div className="flex items-center justify-center gap-2">
+            <ClockIcon className="h-4 w-4" />
+            <span>Dashboard last updated: Today at 2:47 PM</span>
+            <span className="text-gray-300">|</span>
+            <span>Next refresh in 13 minutes</span>
+          </div>
+        </footer>
+      </div>
+    </div>
   );
 }

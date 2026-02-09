@@ -539,7 +539,7 @@ export default function AlertsCenter() {
       <header className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
         <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center gap-6">
           <div className="mb-6 xl:mb-0">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black bg-gradient-to-r from-gray-900 via-indigo-900 to-purple-900 bg-clip-text text-transparent">Alerts Center</h1>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-4xl font-black ">Alerts Center</h1>
             <p className="text-gray-600 mt-3 text-sm sm:text-base lg:text-lg max-w-2xl">Centralized notification system that proactively identifies risks, compliance issues, and operational problems</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 items-center sm:items-end w-full xl:w-auto justify-center xl:justify-end">

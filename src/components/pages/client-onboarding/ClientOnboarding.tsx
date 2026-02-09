@@ -543,7 +543,7 @@ const ClientOnboarding: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
         <div className="mb-4 sm:mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Client Onboarding Journey</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-4xl font-black">Client Onboarding Journey</h2>
           <p className="text-gray-500 mt-1 text-sm sm:text-base">with pipeline tracking and process optimization</p>
           <p className="text-gray-600 mt-2 text-sm sm:text-base">Manages the entire prospect-to-client journey with pipeline tracking and process optimization</p>
         </div>
