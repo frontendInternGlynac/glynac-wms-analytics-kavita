@@ -303,7 +303,7 @@ const ClientManagement: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
         <div className="mb-4 sm:mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Client Management with 360° views</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-4xl font-black">Client Management with 360° views</h2>
           <p className="text-gray-500 mt-1 text-sm sm:text-base">Complete client relationship management with 360° views</p>
         </div>
 

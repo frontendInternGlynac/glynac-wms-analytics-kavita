@@ -189,7 +189,7 @@ function ComplianceDashboard() {
   };
 
   const renderMetricTile = (metric: MetricTile) => (
-    <div className={`text-center p-6 lg:p-8 rounded-2xl ${metric.colorClass} border border-white/50 shadow-lg hover:shadow-xl transition-all duration-500 group`}>
+    <div key={metric.id} className={`text-center p-6 lg:p-8 rounded-2xl ${metric.colorClass} border border-white/50 shadow-lg hover:shadow-xl transition-all duration-500 group`}>
       <div className="text-3xl lg:text-4xl font-black text-gray-900 mb-2">{metric.value}</div>
       <div className="text-sm lg:text-base text-gray-600 font-semibold mb-1">{metric.title}</div>
       <div className="text-xs lg:text-sm text-gray-500">{metric.sub}</div>
@@ -205,7 +205,7 @@ function ComplianceDashboard() {
   const renderAlertItem = (alert: AlertItem) => {
     const levelColor = alert.level === 'HIGH' ? 'bg-red-500 text-white' : alert.level === 'MED' ? 'bg-yellow-500 text-white' : 'bg-green-500 text-white';
     return (
-      <div className="p-4 lg:p-6 rounded-2xl bg-gradient-to-br from-red-50 to-rose-50 border-l-4 border-red-400 shadow-md hover:shadow-lg transition-all duration-300">
+      <div  key = {alert.id}className="p-4 lg:p-6 rounded-2xl bg-gradient-to-br from-red-50 to-rose-50 border-l-4 border-red-400 shadow-md hover:shadow-lg transition-all duration-300">
         <div className="font-bold text-gray-900 text-sm lg:text-base mb-2">{alert.title}</div>
         <div className="text-xs lg:text-sm text-gray-600 mb-3">{alert.description}</div>
         <span className={`inline-block px-2 py-1 rounded-full text-xs font-bold ${levelColor}`}>
@@ -227,7 +227,7 @@ function ComplianceDashboard() {
 );
 
   const renderProgressItem = (item: ProgressItem) => (
-    <div className="p-4 lg:p-6 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/50 shadow-md hover:shadow-lg transition-all duration-300">
+    <div key={item.id} className="p-4 lg:p-6 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/50 shadow-md hover:shadow-lg transition-all duration-300">
       <div className="flex justify-between items-center mb-3">
         <span className="font-semibold text-gray-900 text-sm lg:text-base">{item.label}</span>
         <span className="text-lg font-bold text-emerald-700">{item.value}%</span>
@@ -239,14 +239,14 @@ function ComplianceDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-2 sm:p-4 md:p-6 lg:p-8 font-sans text-gray-800">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <header className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
           <div className="mb-6 lg:mb-0">
-            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-black bg-gradient-to-r from-gray-900 via-indigo-900 to-purple-900 bg-clip-text text-transparent">Compliance Dashboard</h1>
+            <h1 className="text-3xl lg:text-4xl xl:text-4xl font-black ">Compliance Dashboard</h1>
             <p className="text-gray-600 mt-3 text-sm lg:text-base max-w-3xl">Regulatory compliance tracking, risk monitoring, and audit management</p>
           </div>
           <button 
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-2xl hover:from-blue-600 hover:to-indigo-700 font-bold flex items-center gap-2 shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 w-full lg:w-auto justify-center"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-2xl hover:from-blue-600 hover:to-indigo-700 font-bold flex items-center gap-2  transition-all duration-300 transform hover:scale-105 active:scale-95 w-full lg:w-auto justify-center"
             onClick={() => handleAction('Chat with AI')}
           >
             Chat with AI
@@ -256,14 +256,14 @@ function ComplianceDashboard() {
       </header>
 
       {/* Overall Metrics Grid */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {REGULATORY_MONITOR.map(renderMetricTile)}
         </div>
       </section>
 
       {/* Critical Alerts */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Critical Alerts</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {CRITICAL_ALERTS.map(renderAlertItem)}
@@ -271,7 +271,7 @@ function ComplianceDashboard() {
       </section>
 
       {/* Document Compliance */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Document Compliance</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {DOC_COMPLIANCE.map(renderProgressItem)}
@@ -281,7 +281,7 @@ function ComplianceDashboard() {
       {/* Compliance Sections Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Communication Compliance */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Communication Compliance</h3>
           <div className="space-y-6">
             {COMMUNICATION_COMPLIANCE.map((item, index) => (
@@ -297,7 +297,7 @@ function ComplianceDashboard() {
         </section>
 
         {/* Risk Assessment & Monitoring */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Risk Assessment & Monitoring</h3>
           <div className="space-y-6">
             {RISK_MONITOR.map((item, index) => (
@@ -311,11 +311,11 @@ function ComplianceDashboard() {
       </div>
 
       {/* Upcoming Regulatory Requirements */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl border border-white/60 p-6 lg:p-8 mb-8">
         <h2 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Upcoming Regulatory Requirements</h2>
         <div className="space-y-4">
           {UPCOMING_REQUIREMENTS.map((req, index) => (
-            <div key={index} className={`p-6 rounded-2xl border-l-4 ${req.badgeClass === 'bg-red-600 text_white' ? 'bg-red-50 border-red-400' : req.badgeClass === 'bg-yellow-500 text-white' ? 'bg-yellow-50 border-yellow-400' : req.badgeClass === 'bg-blue-600 text_white' ? 'bg-blue-50 border-blue-400' : 'bg-green-50 border-green-400'} shadow-md hover:shadow-lg transition-all duration-300`}>
+            <div key={index} className={`p-6 rounded-2xl border-l-4 ${req.badgeClass === 'bg-red-600 text_white' ? 'bg-red-50 border-red-400' : req.badgeClass === 'bg-yellow-500 text-white' ? 'bg-yellow-50 border-yellow-400' : req.badgeClass === 'bg-blue-600 text_white' ? 'bg-blue-50 border-blue-400' : 'bg-green-50 border-green-400'}  transition-all duration-300`}>
               <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
                 <div className="flex-1">
                   <div className="font-bold text-gray-900 text-sm lg:text-base mb-1">{req.title}</div>
@@ -339,7 +339,7 @@ function ComplianceDashboard() {
       {/* Recent Compliance Actions & Communication Monitoring Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Recent Compliance Actions */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl border border-white/60 p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Recent Compliance Actions</h3>
           <div className="space-y-4">
             {RECENT_ACTIONS.map((action, index) => (
@@ -356,7 +356,7 @@ function ComplianceDashboard() {
         </section>
 
         {/* Communication Monitoring Summary */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Communication Monitoring Summary</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div className="text-center p-6 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl border border-cyan-200/50">
