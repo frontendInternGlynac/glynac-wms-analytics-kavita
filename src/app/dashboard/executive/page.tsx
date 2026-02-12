@@ -7,6 +7,7 @@ import FirmOverview from '@/components/dashboard/executive/FirmOverview';
 import OperationalMetrics from '@/components/dashboard/executive/OperationalMetrics';
 import SystemIntegrationHealth from '@/components/dashboard/executive/SystemIntegrationHealth';
 import UpcomingThisWeek from '@/components/dashboard/executive/UpcomingThisWeek';
+import AIAssistant from '@/components/pages/ai-assistant/AIAssistant';
 
 export default function ExecutivePage() {
     console.log('ExecutivePage rendered');
@@ -25,6 +26,8 @@ export default function ExecutivePage() {
     const handleAIClick = () => {
         // Handle AI assistant logic here
         console.log('AI Assistant clicked');
+         setCurrentTab('ai-assistant');
+         <AIAssistant/>
     };
 
     return (

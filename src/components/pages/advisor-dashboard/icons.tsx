@@ -8,3 +8,4 @@ export const StarIcon = (props: React.ComponentProps<'svg'>) => <Star {...props}
 export const ChevronDownIcon = (props: React.ComponentProps<'svg'>) => <ChevronDown {...props} />;
 export const BrainIcon = (props: React.ComponentProps<'svg'>) => <Brain {...props} />;
 export const ClockIcon = (props: React.ComponentProps<'svg'>) => <Clock {...props} />;
+export const ExclamationTriangleIcon = (props: React.ComponentProps<'svg'>) => <Clock {...props} />;

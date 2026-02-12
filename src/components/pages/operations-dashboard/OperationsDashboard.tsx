@@ -472,7 +472,7 @@ export default function OperationsDashboard() {
   );
 
   const renderTaskDistribution = (task: TaskDistributionMetric) => (
-    <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl border border-purple-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
+    <div key={task.id} className="text-center p-6 bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl border border-purple-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="text-3xl font-bold text-purple-700 mb-2">{task.value}%</div>
       <div className="text-sm text-gray-600">{task.name}</div>
       {task.subValue && <div className="text-xs text-gray-500 mt-1">{task.subValue}</div>}
