@@ -26,7 +26,7 @@ export default function ExecutivePage() {
     const handleAIClick = () => {
         // Handle AI assistant logic here
         console.log('AI Assistant clicked');
-         setCurrentTab('ai-assistant');
+         //setCurrentTab('ai-assistant');
          <AIAssistant/>
     };
 
