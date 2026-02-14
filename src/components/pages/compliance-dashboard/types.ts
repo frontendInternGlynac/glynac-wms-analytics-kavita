@@ -25,4 +25,5 @@ export interface TimelineItem {
   dueLabel: string;
   badgeClass: string;
   actionLabel: string;
+  desc: string;
 }

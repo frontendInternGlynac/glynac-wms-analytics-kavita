@@ -534,9 +534,9 @@ export default function AlertsCenter() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-2 sm:p-4 md:p-6 lg:p-8 font-sans text-gray-800 overflow-x-hidden">
+    <div className="min-h-screen p-2 sm:p-4 md:p-6 lg:p-8 font-sans text-gray-800 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
+      <header className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
         <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center gap-6">
           <div className="mb-6 xl:mb-0">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-4xl font-black ">Alerts Center</h1>
@@ -545,7 +545,7 @@ export default function AlertsCenter() {
           <div className="flex flex-col sm:flex-row gap-3 items-center sm:items-end w-full xl:w-auto justify-center xl:justify-end">
             <div className="relative w-full sm:w-auto flex-1 sm:flex-none max-w-xs">
               <select 
-                className="w-full border border-gray-300/50 px-4 py-3 rounded-2xl text-sm appearance-none bg-white/80 focus:outline-none focus:ring-4 focus:ring-indigo-500/50 focus:border-transparent shadow-lg transition-all duration-300"
+                className="w-full border border-gray-300/50 px-4 py-3 rounded-2xl text-sm appearance-none bg-white/80 focus:outline-none focus:ring-4 focus:ring-indigo-500/50 focus:border-transparent transition-all duration-300"
                 value={alertTypeFilter}
                 onChange={(e) => setAlertTypeFilter(e.target.value as AlertType | 'All')}
               >
@@ -558,7 +558,7 @@ export default function AlertsCenter() {
             </div>
             <div className="relative w-full sm:w-auto flex-1 sm:flex-none max-w-xs">
               <select 
-                className="w-full border border-gray-300/50 px-4 py-3 rounded-2xl text-sm appearance-none bg-white/80 focus:outline-none focus:ring-4 focus:ring-indigo-500/50 focus:border-transparent shadow-lg transition-all duration-300"
+                className="w-full border border-gray-300/50 px-4 py-3 rounded-2xl text-sm appearance-none bg-white/80 focus:outline-none focus:ring-4 focus:ring-indigo-500/50 focus:border-transparent transition-all duration-300"
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value as AlertPriority | 'All')}
               >
@@ -571,7 +571,7 @@ export default function AlertsCenter() {
               <ChevronDownIcon className="absolute right-4 top-4 h-4 w-4 text-gray-400 pointer-events-none transition-transform duration-300" />
             </div>
             <button 
-              className="bg-gradient-to-r from-red-500 to-rose-600 text-white px-8 py-3 rounded-2xl hover:from-red-600 hover:to-rose-700 font-bold flex items-center gap-2 shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 w-full sm:w-auto justify-center"
+              className="bg-gradient-to-r from-red-500 to-rose-600 text-white px-8 py-3 rounded-2xl hover:from-red-600 hover:to-rose-700 font-bold flex items-center gap-2 transition-all duration-300 transform hover:scale-105 active:scale-95 w-full sm:w-auto justify-center"
               onClick={handleMarkAllRead}
             >
               <CheckCircleIcon className="h-4 w-4" />
@@ -582,27 +582,27 @@ export default function AlertsCenter() {
       </header>
 
       {/* Metrics Grid */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-red-50 via-rose-50 to-red-100 border border-red-200/50 shadow-lg hover:shadow-xl transition-shadow duration-500">
+          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-red-50 via-rose-50 to-red-100 border border-red-200/50 hover:shadow-xl transition-shadow duration-500">
             <ExclamationTriangleIcon className="h-8 w-8 text-red-500 mx-auto mb-3 animate-bounce" />
             <div className="text-3xl lg:text-4xl font-black text-red-700 mb-1">7</div>
             <div className="text-sm lg:text-base text-gray-600 font-semibold mb-1">Critical Alerts</div>
             <div className="text-xs text-red-600 font-medium">Require immediate attention</div>
           </div>
-          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100 border border-yellow-200/50 shadow-lg hover:shadow-xl transition-shadow duration-500">
+          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100 border border-yellow-200/50 hover:shadow-xl transition-shadow duration-500">
             <ExclamationTriangleIcon className="h-8 w-8 text-yellow-500 mx-auto mb-3" />
             <div className="text-3xl lg:text-4xl font-black text-yellow-700 mb-1">23</div>
             <div className="text-sm lg:text-base text-gray-600 font-semibold mb-1">High Priority</div>
             <div className="text-xs text-yellow-600 font-medium">Action needed today</div>
           </div>
-          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 border border-blue-200/50 shadow-lg hover:shadow-xl transition-shadow duration-500">
+          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 border border-blue-200/50 hover:shadow-xl transition-shadow duration-500">
             <InformationCircleIcon className="h-8 w-8 text-blue-500 mx-auto mb-3" />
             <div className="text-3xl lg:text-4xl font-black text-blue-700 mb-1">41</div>
             <div className="text-sm lg:text-base text-gray-600 font-semibold mb-1">Medium Priority</div>
             <div className="text-xs text-blue-600 font-medium">Review this week</div>
           </div>
-          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border border-green-200/50 shadow-lg hover:shadow-xl transition-shadow duration-500">
+          <div className="text-center p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border border-green-200/50 hover:shadow-xl transition-shadow duration-500">
             <CheckCircleIcon className="h-8 w-8 text-green-500 mx-auto mb-3" />
             <div className="text-3xl lg:text-4xl font-black text-green-700 mb-1">18</div>
             <div className="text-sm lg:text-base text-gray-600 font-semibold mb-1">Resolved Today</div>
@@ -612,7 +612,7 @@ export default function AlertsCenter() {
       </section>
 
       {/* Filters and Active Alerts */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
         <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center gap-6 mb-8">
           <h2 className="text-xl lg:text-2xl font-black text-gray-900 flex items-center gap-3">Active Alerts</h2>
           <div className="flex flex-col sm:flex-row gap-3 items-center sm:items-end w-full xl:w-auto justify-center xl:justify-end">
@@ -668,13 +668,13 @@ export default function AlertsCenter() {
       {/* Alert Categories and Resolution Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8">
         {/* Alert Categories */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl border border-white/60 p-4 sm:p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Alert Categories</h3>
           <div className="space-y-4">
             {ALERT_CATEGORIES.map((cat) => (
               <div key={cat.name} className="flex justify-between items-center p-4 bg-white/50 rounded-2xl border border-gray-200/50 hover:bg-white/70 transition-colors duration-300">
                 <div className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${cat.color} shadow-lg`}></div>
+                  <div className={`w-3 h-3 rounded-full ${cat.color} `}></div>
                   <span className="font-semibold text-gray-900 text-sm sm:text-base">{cat.name}</span>
                 </div>
                 <span className="text-lg font-bold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">{cat.value}</span>
@@ -684,7 +684,7 @@ export default function AlertsCenter() {
         </section>
 
         {/* Resolution Performance */}
-        <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8">
+        <section className="bg-white/90 backdrop-blur-md rounded-3xl  p-4 sm:p-6 lg:p-8">
           <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Resolution Performance</h3>
           <div className="space-y-6">
             <div className="flex justify-between items-center p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl border border-emerald-200/50">
@@ -712,7 +712,7 @@ export default function AlertsCenter() {
       </div>
 
       {/* Alert Sources */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl  border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
         <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Alert Sources</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {ALERT_SOURCES.map((source, index) => (
@@ -726,7 +726,7 @@ export default function AlertsCenter() {
       </section>
 
       {/* AI Agent */}
-      <section className="bg-gradient-to-r from-rose-50 via-red-50 to-rose-100 rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-8">
+      <section className="bg-gradient-to-r from-rose-50 via-red-50 to-rose-100 rounded-3xl  p-4 sm:p-6 lg:p-8 mb-8">
         <div className="flex flex-col xl:flex-row xl:justify-between xl:items-start gap-6 mb-6">
           <div className="flex items-center gap-4 flex-1">
             <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-rose-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-2xl">
@@ -766,7 +766,7 @@ export default function AlertsCenter() {
       </section>
 
       {/* Alert Settings */}
-      <section className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
+      <section className="bg-white/90 backdrop-blur-md rounded-3xl border border-white/60 p-4 sm:p-6 lg:p-8 mb-8">
         <h3 className="text-xl lg:text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">Alert Settings</h3>
         <div className="space-y-4 max-w-md">
           <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl border border-gray-200/50">

@@ -77,7 +77,7 @@ export default function ReportsAndAnalytics() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 p-4 sm:p-6 font-sans text-gray-800">
+    <div className="min-h-screen  p-4 sm:p-6 font-sans text-gray-800">
       {/* Header */}
       <header className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
